@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karl's Blog | My Experience Using USEP's Online Enrolment System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blog-dark': '#2D0A05',
+                        'blog-brown': '#4A2C20',
+                        'blog-gold': '#C99341',
+                        'blog-beige': '#E6D1B7',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased overflow-x-hidden flex flex-col items-center">
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 w-full">
+        <div class="max-w-5xl mx-auto px-6 py-6 lg:py-8">
+            <a href="../index.html">
+                <b><h1 class="text-4xl lg:text-5xl font-semibold text-blog-gold">karl's blog</h1></b>
+            </a>
+        </div>
+    </header>
+
+    <div class="w-full max-w-5xl px-6 py-12 flex flex-col items-center">
+        
+        <nav class="mb-12 w-full max-w-3xl">
+            <a href="../index.html" class="text-sm font-semibold uppercase tracking-widest text-blog-gold hover:text-blog-dark transition-colors">
+                ← Back to Home
+            </a>
+        </nav>
+
+        <article class="max-w-3xl w-full">
+            <header class="mb-10 text-center md:text-left">
+                <h1 class="text-3xl md:text-4xl font-bold text-blog-dark leading-tight mb-4">
+                    My Experience Using USEP's Online Enrolment System as an IT Student
+                </h1>
+                <div class="text-sm text-gray-400">January 15, 2026</div>
+            </header>
+
+            <div class="aspect-[16/9] bg-blog-beige overflow-hidden mb-12 rounded-sm shadow-sm">
+                <img src="../images/post1.png" alt="IT Student illustration" class="w-full h-full object-cover">
+            </div>
+
+            <div class="space-y-8 leading-relaxed text-gray-600">
+                <p>Using an online enrollment system is now a normal part of college life. At USEP, the new Online Enrollment System (OES) has become the primary platform students rely on during every enrollment period. As an IT student, my experience with the OES was not just about enrolling in subjects but also about observing how the system works, what it does well, and where it struggles. While using it, I often found myself thinking not only as a student trying to finish enrollment, but also as someone interested in how the system was designed and how it could be improved.</p>
+                <p>Overall, my experience with the OES was positive. The system is clean, easy to use, and well-organized. However, there were also moments, especially during peak enrollment, when technical issues such as slow loading times and scheduling conflicts arose. These experiences provided me with a deeper understanding of how real-world systems behave under heavy usage and how design decisions impact users.</p>
+
+                <h2 class="text-xl font-bold text-blog-dark uppercase tracking-wide">First Look at the Dashboard</h2>
+                <p>The first time I tried logging in on my personal computer, I found a minor issue: when I logged in using the "Log in" button, it would not work; instead, I had to press Enter. One of the first things I appreciated about the OES was the dashboard. When I logged in, the system immediately displayed important information, such as my program and the college to which it belongs. Everything was laid out clearly, and I didn't have to search around to find basic details about my enrollment status.</p>
+                <p>From my perspective as an IT student, this kind of layout makes a big difference. A simple and organized dashboard helps users focus on what they need to do without feeling overwhelmed. It demonstrates that the developers prioritized user experience and avoided unnecessary complexity. I found it easy to navigate due to the minimal content and simple design of the OES.</p>
+
+                <h2 class="text-xl font-bold text-blog-dark uppercase tracking-wide">Viewing Enrolled Courses</h2>
+                <p>Another feature I found helpful was the section that lists the courses I am enrolled in for the upcoming or ongoing semester. The OES clearly shows the course name, section, number of units, and the schedule, including the time and location of each class. All the information I needed was available in one place.</p>
+                <p>This made it easier for me to double-check my schedule and ensure that everything was correct. I didn't need to rely on separate documents or ask around to confirm my class details. I also appreciated how structured the information was, which suggests that the system has a well-organized database behind it.</p>
+                <p>Below the list of enrolled courses is the evaluation section, which shows all the semesters in my program. This part displays my final grades, remarks, and the prerequisites for each course. I find this feature very useful, especially when planning ahead. Even though the system does not provide detailed descriptions of future subjects, it gives enough information for me to prepare. I can see which courses are coming next and research them in advance. This helps me set expectations and mentally prepare for future semesters, especially since IT subjects can become more challenging over time.</p>
+                <p>From a technical point of view, this section shows that the system properly manages academic records and connects past, current, and future data in a meaningful way. As a student, having access to this information makes me feel more in control of my academic progress.</p>
+
+                <h2 class="text-xl font-bold text-blog-dark uppercase tracking-wide">Simplicity and Ease of Use</h2>
+                <p>One thing I consistently noticed while using the OES was how simple it felt. The design is clean, and the system does not overwhelm users with too many features at once. Navigation is intuitive, and most actions are easy to understand even without instructions.</p>
+                <p>As an IT student, I often find myself thinking about how systems are built. While using the OES, I sometimes imagined how its features were implemented and how the same design principles could be applied to other systems. Even though I am not actually building the system, this kind of thinking helps me learn and connect theory from my learning to real-world applications. </p>
+
+                <h2 class="text-xl font-bold text-blog-dark uppercase tracking-wide">Problems During Enrollment Period</h2>
+                <p>Despite its strengths, the OES also had some issues during the enrollment period. One of the most noticeable problems was how long the website took to load. At certain times, pages would respond slowly, and actions would take longer than expected.</p>
+                <p>Our section also experienced a problem where two of our subjects had conflicting schedules. Ideally, the system should be able to prevent this from happening automatically by implementing an algorithm that will ensure that there are no schedules in conflict. These issues caused confusion and stress to those who encountered this problem.</p>
+                <p>As an IT Student, I understand why these problems happen. During enrollment, many students access the system at the same time. This creates heavy traffic, which can overload the server. When the server receives more requests than it can handle, performance slows down, resulting in long loading times or temporary system issues.</p>
+
+                <h2 class="text-xl font-bold text-blog-dark uppercase tracking-wide">Suggestions for Improvement</h2>
+                <p>As an IT student, I believe one major improvement would be to implement an algorithm that automatically detects and prevents schedule conflicts before enrollment is finalized, as conflicting schedules caused confusion and unnecessary stress for students who encountered this issue. Another important improvement would be to increase server capacity and carefully analyze the system architecture to ensure that the online enrolment system can handle high user traffic during peak enrollment periods without slowing down or crashing.</p>
+
+                <h2 class="text-xl font-bold text-blog-dark uppercase tracking-wide">Overall</h2>
+                <p>Overall, my experience with the USEP Online Enrolment System was mostly positive. The system is clean, easy to use, and helpful for academic planning. While technical issues such as slow loading times and scheduling conflicts exist, these are understandable challenges that can be addressed with proper system improvements.</p>
+                <p>As an IT student, I see the OES not only as a tool for enrollment but also as a learning opportunity. Many people may think that a website only consists of design and data, and while that is partly true, there is much more behind it. System scalability, performance, and security are often overlooked during development. A system may work well for 67 active users, or even 1,000, but what happens when that number increases to 10,000? Can the system's architecture handle the load, and is the data still properly protected? These considerations reflect how real-world systems are designed, how they perform under pressure, and how even small improvements can significantly impact the overall user experience.</p>
+            </div>
+        </article>
+
+        <footer class="mt-20 pt-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 gap-y-4 w-full max-w-3xl">
+            <p>&copy; KARL'S BLOG 2026</p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://www.facebook.com/demesakarl/" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">Facebook</a>
+                <a href="https://www.instagram.com/dmknzo/" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">Instagram</a>
+                <a href="https://www.linkedin.com/in/enzo-de-mesa-2a5450355/" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">LinkedIn</a>
+                <a href="https://github.com/Enzo-CS" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">Github</a>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
