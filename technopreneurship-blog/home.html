@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karl's Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'blog-dark': '#2D0A05',
+                        'blog-brown': '#4A2C20',
+                        'blog-gold': '#C99341',
+                        'blog-beige': '#E6D1B7',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 antialiased overflow-x-hidden">
+
+    
+    <!-- HEADER -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 w-full">
+        <div class="max-w-5xl mx-auto px-6 py-6 lg:py-8">
+            <a href="../home.html">
+                <b><h1 class="text-4xl lg:text-5xl font-semibold text-blog-gold">karl's blog</h1></b>
+            </a>
+        </div>
+    </header>
+
+    <!-- BODY -->
+    <div class="max-w-5xl mx-auto px-6 py-12">
+            
+        <section class="bg-blog-gold w-screen relative left-1/2 right-1/2 -ml-[50vw] mb-16 py-12 px-6">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <div class="aspect-[2/3] bg-blog-beige overflow-hidden shadow-sm">
+                    <img src="images/author.png" alt="Karl" class="w-full h-full object-cover">
+                </div>
+
+                <div class="text-white">
+                    <h2 class="text-2xl font-bold uppercase tracking-widest mb-4">About the Author</h2>
+                    <p class="text-lg leading-relaxed opacity-95">
+                        <b class="text-xl">Karl Enzo S. De Mesa</b><br>
+                        1st Year IT Student • Aspiring Software Engineer
+                    </p>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- POSTS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16">
+            
+            <!-- POST #1 -->
+            <a href="posts/post1.html" class="group block">
+                <div class="aspect-[16/9] bg-blog-beige overflow-hidden mb-6">
+                    <img 
+                        src="images/post1.png" 
+                        alt="Karl's Online Enrolment Experience" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
+                    >
+                </div>
+
+                <span class="text-xs font-semibold uppercase tracking-widest text-blog-gold mb-3 block">BLOG POST #1</span>
+                <h2 class="text-2xl font-medium text-blog-dark group-hover:text-blog-brown transition-colors mb-3">
+                    My Experience Using the New Online Enrolment System as an IT Student
+                </h2>
+                <p class="text-gray-500 leading-relaxed line-clamp-2">
+                    Exploring the highs and lows of the new digital enrolment process through the eyes of an IT student...
+                </p>
+            </a>
+
+            <!-- POST #2 -->
+            <a href="posts/post2.html" class="group block">
+                <div class="aspect-[16/9] bg-blog-beige overflow-hidden mb-6">
+                    <img 
+                        src="images/post2.png" 
+                        alt="Karl's Technopreneurship Meeting" 
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-in-out"
+                    >
+                </div>
+
+                <span class="text-xs font-semibold uppercase tracking-widest text-blog-gold mb-3 block">BLOG POST #2</span>
+                <h2 class="text-2xl font-medium text-blog-dark group-hover:text-blog-brown transition-colors mb-3">
+                    My Takeaways from Our First Face-to-Face Technopreneurship Meeting
+                </h2>
+                <p class="text-gray-500 leading-relaxed line-clamp-2">
+                    Reflections on the shift to in-person learning and the key concepts discussed during our first meeting.
+                </p>
+            </a>
+
+        </div>
+        
+        <!-- FOOTER -->
+        <footer class="mt-20 pt-12 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400 gap-y-4">
+            <p>&copy; KARL'S BLOG 2026</p>
+
+            <div class="flex flex-wrap justify-center gap-6">
+                <a href="https://www.facebook.com/demesakarl/" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">Facebook</a>
+                <a href="https://www.instagram.com/dmknzo/" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">Instagram</a>
+                <a href="https://www.linkedin.com/in/enzo-de-mesa-2a5450355/" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">LinkedIn</a>
+                <a href="https://github.com/Enzo-CS" target="_blank" rel="noopener noreferrer" class="hover:text-blog-gold transition-colors">Github</a>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
+
