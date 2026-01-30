@@ -4,22 +4,27 @@
         <meta charset="UTF-8" />
         <title>Valentine 💖</title>
 
-        <!-- Tailwind CDN -->
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+        
         <script src="https://cdn.tailwindcss.com"></script>
+
+        <style>
+            /* 2. Apply the font to a custom class */
+            .romantic-font {
+                font-family: 'Dancing Script', cursive;
+            }
+        </style>
     </head>
 
     <body class="bg-white overflow-hidden">
 
-        <!-- Dialogue Screen -->
-        <div
-            id="dialogueScreen"
-            class="fixed inset-0 flex items-center justify-center"
-        >
+        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center">
             <p
                 id="dialogueText"
-                class="text-pink-300 text-4xl font-light tracking-wide
+                /* 3. Added 'romantic-font' and changed to 'text-7xl' or 'text-8xl' */
+                class="romantic-font text-pink-400 text-7xl md:text-9xl font-bold 
                         opacity-0 transition-opacity duration-[1500ms]
-                        text-center"
+                        text-center drop-shadow-sm"
             >
             </p>
         </div>
@@ -35,32 +40,24 @@
             let index = 0;
 
             function showLine() {
-                if (index >= lines.length) {
-                    // END OF PART 1
-                    // Later we will transition to the polaroid section
-                    return;
-                }
+                if (index >= lines.length) return;
 
                 dialogueText.textContent = lines[index];
                 dialogueText.classList.remove("opacity-0");
                 dialogueText.classList.add("opacity-100");
 
-                // Stay visible
                 setTimeout(() => {
                     dialogueText.classList.remove("opacity-100");
                     dialogueText.classList.add("opacity-0");
 
                     index++;
-                    setTimeout(showLine, 1500); // wait before next line
+                    setTimeout(showLine, 1500); 
                 }, 3500);
             }
 
-            // Start after page loads
             window.onload = () => {
                 setTimeout(showLine, 3000);
             };
         </script>
-
     </body>
 </html>
-
