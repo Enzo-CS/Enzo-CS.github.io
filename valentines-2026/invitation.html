@@ -4,10 +4,8 @@
         <meta charset="UTF-8" />
         <title>Valentine 💖</title>
 
-        <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
 
-        <!-- Tailwind CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
 
         <style>
@@ -20,10 +18,16 @@
                 padding: 12px 12px 24px;
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
                 border-radius: 4px;
-                width: 220px;
+                width: 240px;
                 cursor: grab;
-                transition: transform 0.3s ease, opacity 0.3s ease;
+                /* Removed the global transition to fix the drag lag */
                 user-select: none;
+                touch-action: none; /* Prevents mobile scrolling while dragging */
+            }
+
+            /* This class is added via JS only when the card is snapping back or flying away */
+            .polaroid-transition {
+                transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             }
 
             .polaroid:active {
@@ -34,94 +38,77 @@
                 width: 100%;
                 aspect-ratio: 1 / 1;
                 object-fit: cover;
+                pointer-events: none;
             }
 
             .heart {
                 position: absolute;
-                font-size: 16px;
+                font-size: 20px;
                 pointer-events: none;
-                animation: floatUp 1s ease-out forwards;
+                z-index: 50;
+                animation: floatUp 0.8s ease-out forwards;
             }
 
             @keyframes floatUp {
                 from {
-                    transform: translateY(0) scale(1);
+                    transform: translateY(0) scale(1) rotate(0deg);
                     opacity: 1;
                 }
                 to {
-                    transform: translateY(-40px) scale(1.5);
+                    transform: translateY(-100px) scale(1.5) rotate(20deg);
                     opacity: 0;
                 }
             }
         </style>
     </head>
 
-    <body class="bg-white overflow-hidden">
+    <body class="bg-rose-50 overflow-hidden">
 
-        <!-- PART 1: Dialogue Screen -->
         <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-20">
             <p
                 id="dialogueText"
-                class="romantic-font text-pink-400 text-6xl font-bold
+                /* Changed text to red-600 and increased size slightly */
+                class="romantic-font text-red-600 text-7xl font-bold
                         opacity-0 transition-opacity duration-[1500ms]
-                        text-center drop-shadow-sm"
+                        text-center drop-shadow-md"
             >
             </p>
         </div>
 
-        <!-- PART 2: Polaroid Stack -->
         <div
             id="polaroidStack"
             class="fixed inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[2000ms] z-10"
         >
-            <div class="relative w-[500px] h-[500px]">
+            <div class="relative w-[300px] h-[400px] flex items-center justify-center">
 
-                <!-- Polaroid 1 -->
-                <div class="polaroid swipeable absolute top-20 left-28 rotate-[-8deg] z-[6]">
-                    <img src="https://picsum.photos/300?random=1" />
-                    <p class="romantic-font text-center mt-2 text-gray-700">
-                        Our first memory 💕
-                    </p>
-                </div>
-
-                <!-- Polaroid 2 -->
-                <div class="polaroid swipeable absolute top-24 left-36 rotate-[5deg] z-[5]">
-                    <img src="https://picsum.photos/300?random=2" />
-                    <p class="romantic-font text-center mt-2 text-gray-700">
-                        Endless laughs
-                    </p>
-                </div>
-
-                <!-- Polaroid 3 -->
-                <div class="polaroid swipeable absolute top-32 left-24 rotate-[-2deg] z-[4]">
-                    <img src="https://picsum.photos/300?random=3" />
-                    <p class="romantic-font text-center mt-2 text-gray-700">
-                        Late night talks 🌙
-                    </p>
-                </div>
-
-                <!-- Polaroid 4 -->
-                <div class="polaroid swipeable absolute top-36 left-40 rotate-[10deg] z-[3]">
-                    <img src="https://picsum.photos/300?random=4" />
-                    <p class="romantic-font text-center mt-2 text-gray-700">
-                        Stolen moments
-                    </p>
-                </div>
-
-                <!-- Polaroid 5 -->
-                <div class="polaroid swipeable absolute top-44 left-30 rotate-[-12deg] z-[2]">
-                    <img src="https://picsum.photos/300?random=5" />
-                    <p class="romantic-font text-center mt-2 text-gray-700">
-                        Just us 💖
-                    </p>
-                </div>
-
-                <!-- Polaroid 6 -->
-                <div class="polaroid swipeable absolute top-48 left-34 rotate-[3deg] z-[1]">
+                <div class="polaroid swipeable absolute rotate-[3deg] z-[1]">
                     <img src="https://picsum.photos/300?random=6" />
-                    <p class="romantic-font text-center mt-2 text-gray-700">
-                        Forever vibes
-                    </p>
+                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Forever vibes</p>
+                </div>
+
+                <div class="polaroid swipeable absolute rotate-[-12deg] z-[2]">
+                    <img src="https://picsum.photos/300?random=5" />
+                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Just us 💖</p>
+                </div>
+
+                <div class="polaroid swipeable absolute rotate-[10deg] z-[3]">
+                    <img src="https://picsum.photos/300?random=4" />
+                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Stolen moments</p>
+                </div>
+
+                <div class="polaroid swipeable absolute rotate-[-2deg] z-[4]">
+                    <img src="https://picsum.photos/300?random=3" />
+                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Late night talks 🌙</p>
+                </div>
+
+                <div class="polaroid swipeable absolute rotate-[5deg] z-[5]">
+                    <img src="https://picsum.photos/300?random=2" />
+                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Endless laughs</p>
+                </div>
+
+                <div class="polaroid swipeable absolute rotate-[-8deg] z-[6]">
+                    <img src="https://picsum.photos/300?random=1" />
+                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Our first memory 💕</p>
                 </div>
 
             </div>
@@ -130,7 +117,6 @@
         <script>
             /* PART 1 LOGIC */
             const lines = [
-                "Testing",
                 "Hey baby",
                 "I love you",
                 "Be my Valentine 💖"
@@ -144,14 +130,13 @@
 
             function showLine() {
                 if (index >= lines.length) {
-                    // Transition to Part 2
-                    dialogueScreen.classList.add("opacity-0");
+                    dialogueScreen.classList.add("pointer-events-none");
+                    dialogueScreen.style.opacity = "0";
 
                     setTimeout(() => {
                         polaroidStack.classList.remove("opacity-0");
                         polaroidStack.classList.add("opacity-100");
-                    }, 1500);
-
+                    }, 1000);
                     return;
                 }
 
@@ -164,20 +149,22 @@
                     dialogueText.classList.add("opacity-0");
 
                     index++;
-                    setTimeout(showLine, 1500);
-                }, 3500);
+                    setTimeout(showLine, 1000);
+                }, 3000);
             }
 
             window.onload = () => {
-                setTimeout(showLine, 3000);
+                setTimeout(showLine, 1000);
             };
 
+            /* SWIPE LOGIC */
             const polaroids = document.querySelectorAll(".swipeable");
             let activeCard = null;
             let startX = 0;
             let startY = 0;
             let currentX = 0;
             let currentY = 0;
+            let heartTimer = 0;
 
             polaroids.forEach(card => {
                 card.addEventListener("pointerdown", startSwipe);
@@ -185,65 +172,75 @@
 
             function startSwipe(e) {
                 activeCard = e.currentTarget;
+                // Remove the transition class so dragging is instant/smooth
+                activeCard.classList.remove("polaroid-transition");
+                
                 startX = e.clientX;
                 startY = e.clientY;
 
                 activeCard.setPointerCapture(e.pointerId);
-
                 activeCard.addEventListener("pointermove", onSwipe);
                 activeCard.addEventListener("pointerup", endSwipe);
-            }
-
-            function onSwipe(e) {
-                currentX = e.clientX - startX;
-                currentY = e.clientY - startY;
-
-                activeCard.style.transform = `
-                    translate(${currentX}px, ${currentY}px)
-                    rotate(${currentX * 0.05}deg)
-                `;
-
+                
                 spawnHeart(e.clientX, e.clientY);
             }
 
-            function endSwipe(e) {
-                activeCard.releasePointerCapture(e.pointerId);
+            function onSwipe(e) {
+                if (!activeCard) return;
 
-                const threshold = 120;
+                currentX = e.clientX - startX;
+                currentY = e.clientY - startY;
 
-                if (Math.abs(currentX) > threshold) {
-                    // Swipe away
-                    activeCard.style.transform = `
-                        translate(${currentX * 2}px, ${currentY}px)
-                        rotate(${currentX * 0.2}deg)
-                    `;
-                    activeCard.style.opacity = "0";
+                // Apply the movement
+                activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentX * 0.1}deg)`;
 
-                    setTimeout(() => {
-                        activeCard.remove();
-                    }, 300);
-                } else {
-                    // Snap back
-                    activeCard.style.transform = "";
+                // Throttle heart spawning so it's not too messy
+                heartTimer++;
+                if (heartTimer % 5 === 0) {
+                    spawnHeart(e.clientX, e.clientY);
                 }
+            }
 
+            function endSwipe(e) {
+                if (!activeCard) return;
+
+                activeCard.releasePointerCapture(e.pointerId);
                 activeCard.removeEventListener("pointermove", onSwipe);
                 activeCard.removeEventListener("pointerup", endSwipe);
 
+                const threshold = 150;
+
+                // Add transition back for the exit or snap-back animation
+                activeCard.classList.add("polaroid-transition");
+
+                if (Math.abs(currentX) > threshold) {
+                    // Swipe away: Move it far off screen
+                    const direction = currentX > 0 ? 1 : -1;
+                    activeCard.style.transform = `translate(${direction * 1000}px, ${currentY}px) rotate(${direction * 45}deg)`;
+                    activeCard.style.opacity = "0";
+
+                    // Cleanup
+                    const cardToRemove = activeCard;
+                    setTimeout(() => cardToRemove.remove(), 500);
+                } else {
+                    // Snap back to original position (defined by the container flex)
+                    activeCard.style.transform = "";
+                }
+
                 activeCard = null;
-                currentX = currentY = 0;
+                currentX = 0;
+                currentY = 0;
             }
 
             function spawnHeart(x, y) {
                 const heart = document.createElement("div");
                 heart.className = "heart";
-                heart.textContent = "💖";
-                heart.style.left = x + "px";
-                heart.style.top = y + "px";
+                heart.textContent = ["💖", "💗", "❤️", "💕"][Math.floor(Math.random() * 4)];
+                heart.style.left = (x - 10) + "px";
+                heart.style.top = (y - 10) + "px";
 
                 document.body.appendChild(heart);
-
-                setTimeout(() => heart.remove(), 1000);
+                setTimeout(() => heart.remove(), 800);
             }
         </script>
 
