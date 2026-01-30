@@ -5,7 +5,6 @@
         <title>Valentine 💖</title>
 
         <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
-
         <script src="https://cdn.tailwindcss.com"></script>
         
         <script>
@@ -24,6 +23,7 @@
         <style>
             .romantic-font { font-family: 'La Belle Aurore', cursive; }
 
+            /* Polaroid Styles */
             .polaroid {
                 background: white;
                 padding: 12px 12px 24px;
@@ -34,25 +34,89 @@
                 user-select: none;
                 touch-action: none;
             }
-
             .polaroid-transition {
                 transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             }
+            .polaroid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; pointer-events: none; }
 
-            .polaroid:active { cursor: grabbing; }
-
-            .polaroid img {
-                width: 100%;
-                aspect-ratio: 1 / 1;
-                object-fit: cover;
-                pointer-events: none;
+            /* Envelope Container */
+            .envelope-wrapper {
+                position: relative;
+                width: 300px;
+                height: 200px;
+                background-color: #ba2332; /* custom-red */
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                cursor: pointer;
             }
 
-            .heart {
+            /* The Flap */
+            .envelope-flap {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #ba2332;
+                clip-path: polygon(0 0, 50% 50%, 100% 0);
+                transition: transform 0.8s ease, z-index 0.4s;
+                transform-origin: top;
+                z-index: 3;
+            }
+
+            /* When the envelope opens */
+            .envelope-wrapper.open .envelope-flap {
+                transform: rotateX(180deg);
+                z-index: 1;
+            }
+
+            /* The Front Fold (Visual only) */
+            .envelope-front {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #ba2332;
+                clip-path: polygon(0 100%, 50% 50%, 100% 100%, 0 100%);
+                z-index: 4;
+            }
+
+            .envelope-sides {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #9d1d2a; /* Slightly darker red */
+                clip-path: polygon(0 0, 0 100%, 50% 50%, 100% 100%, 100% 0);
+                z-index: 2;
+            }
+
+            /* The Letter Inside */
+            .letter {
+                position: absolute;
+                bottom: 5px;
+                left: 5%;
+                width: 90%;
+                height: 90%;
+                background: white;
+                padding: 20px;
+                transition: transform 1s ease-in-out, height 1s ease-in-out, z-index 0s 0.5s;
+                z-index: 2;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+            .envelope-wrapper.open .letter {
+                transform: translateY(-160px);
+                height: 380px;
+                z-index: 5; /* Moves above the flap */
+            }
+
+            .heart-particle {
                 position: absolute;
                 font-size: 20px;
                 pointer-events: none;
-                z-index: 50;
+                z-index: 99;
                 animation: floatUp 0.8s ease-out forwards;
             }
 
@@ -60,183 +124,161 @@
                 from { transform: translateY(0) scale(1); opacity: 1; }
                 to { transform: translateY(-100px) scale(1.5); opacity: 0; }
             }
-
-            /* Pulse effect for the Yes button */
-            @keyframes pulse-soft {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-            }
-            .animate-pulse-soft { animation: pulse-soft 2s infinite; }
         </style>
     </head>
 
     <body class="bg-custom-pink overflow-hidden">
 
-        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-30 transition-opacity duration-1000">
-            <p id="dialogueText" class="romantic-font text-custom-red text-7xl font-bold opacity-0 transition-opacity duration-[1500ms] text-center drop-shadow-md"></p>
+        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-1000">
+            <p id="dialogueText" class="romantic-font text-custom-red text-7xl font-bold opacity-0 transition-opacity duration-[1500ms] text-center"></p>
         </div>
 
-        <div id="polaroidStack" class="fixed inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[2000ms] z-20">
+        <div id="polaroidStack" class="fixed inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[2000ms] z-40">
             <div class="relative w-[300px] h-[400px] flex items-center justify-center">
                 <div class="polaroid swipeable absolute rotate-[3deg] z-[1]">
-                    <img src="https://picsum.photos/300?random=6" />
-                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Forever vibes</p>
+                    <img src="https://picsum.photos/300?random=6" /><p class="romantic-font text-center mt-2 text-gray-700">Forever vibes</p>
                 </div>
                 <div class="polaroid swipeable absolute rotate-[-12deg] z-[2]">
-                    <img src="https://picsum.photos/300?random=5" />
-                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Just us 💖</p>
+                    <img src="https://picsum.photos/300?random=5" /><p class="romantic-font text-center mt-2 text-gray-700">Just us 💖</p>
                 </div>
                 <div class="polaroid swipeable absolute rotate-[10deg] z-[3]">
-                    <img src="https://picsum.photos/300?random=4" />
-                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Stolen moments</p>
+                    <img src="https://picsum.photos/300?random=4" /><p class="romantic-font text-center mt-2 text-gray-700">Stolen moments</p>
                 </div>
                 <div class="polaroid swipeable absolute rotate-[-2deg] z-[4]">
-                    <img src="https://picsum.photos/300?random=3" />
-                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Late night talks 🌙</p>
+                    <img src="https://picsum.photos/300?random=3" /><p class="romantic-font text-center mt-2 text-gray-700">Late night talks 🌙</p>
                 </div>
                 <div class="polaroid swipeable absolute rotate-[5deg] z-[5]">
-                    <img src="https://picsum.photos/300?random=2" />
-                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Endless laughs</p>
+                    <img src="https://picsum.photos/300?random=2" /><p class="romantic-font text-center mt-2 text-gray-700">Endless laughs</p>
                 </div>
                 <div class="polaroid swipeable absolute rotate-[-8deg] z-[6]">
-                    <img src="https://picsum.photos/300?random=1" />
-                    <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Our first memory 💕</p>
+                    <img src="https://picsum.photos/300?random=1" /><p class="romantic-font text-center mt-2 text-gray-700">Our first memory 💕</p>
                 </div>
             </div>
         </div>
 
-        <div id="finalScreen" class="fixed inset-0 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-[2000ms] z-10 p-6 text-center">
-            <h1 class="romantic-font text-custom-red text-6xl md:text-8xl mb-12 drop-shadow-md">
-                Will you be my Valentine?
-            </h1>
-            
-            <div class="flex gap-8 items-center relative w-full justify-center">
-                <button onclick="handleYes()" class="romantic-font bg-custom-red text-white px-12 py-4 rounded-full text-4xl shadow-xl animate-pulse-soft hover:scale-110 transition-transform">
-                    Yes!
-                </button>
+        <div id="envelopeSection" class="fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 z-30">
+            <div id="envelope" class="envelope-wrapper" onclick="openEnvelope()">
+                <div class="envelope-flap"></div>
+                <div class="envelope-sides"></div>
+                <div class="envelope-front"></div>
+                
+                <div class="letter text-center flex flex-col items-center justify-center shadow-2xl rounded-sm">
+                    <h2 class="romantic-font text-custom-red text-4xl mb-4 font-bold">My Dearest,</h2>
+                    <p class="romantic-font text-gray-700 text-2xl mb-6">
+                        You make every day brighter just by being in it. <br>
+                        Will you be my Valentine?
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
+                        <button onclick="handleYes(event)" class="bg-custom-red text-white px-8 py-2 rounded-full text-2xl romantic-font hover:scale-110 transition-transform">
+                            Yes!
+                        </button>
+                        <button id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton(event)" class="border-2 border-custom-red text-custom-red px-8 py-2 rounded-full text-2xl romantic-font transition-all duration-200">
+                            No
+                        </button>
+                    </div>
 
-                <button id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton()" class="romantic-font border-2 border-custom-red text-custom-red px-12 py-4 rounded-full text-4xl transition-all duration-200">
-                    No
-                </button>
-            </div>
-
-            <div id="successMessage" class="mt-12 opacity-0 transition-opacity duration-1000">
-                <p class="romantic-font text-custom-red text-4xl">Yay! I knew you'd say yes! 💖✨</p>
+                    <div id="successMessage" class="mt-4 opacity-0 transition-opacity duration-1000">
+                        <p class="romantic-font text-custom-red text-2xl">Yay! I love you! 💖</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <script>
-            /* LOGIC FOR TRANSITIONS */
-            const lines = ["hey baby", "i love you", "be my Valentine 💖"];
-            const dialogueText = document.getElementById("dialogueText");
-            const dialogueScreen = document.getElementById("dialogueScreen");
-            const polaroidStack = document.getElementById("polaroidStack");
-            const finalScreen = document.getElementById("finalScreen");
             let index = 0;
-            let cardsLeft = 6; // Match number of polaroids
+            let cardsLeft = 6;
+            const lines = ["hey baby", "i love you", "be my Valentine 💖"];
 
+            /* Dialogue Logic */
             function showLine() {
+                const text = document.getElementById("dialogueText");
                 if (index >= lines.length) {
-                    dialogueScreen.classList.add("opacity-0", "pointer-events-none");
-                    setTimeout(() => {
-                        polaroidStack.classList.replace("opacity-0", "opacity-100");
-                    }, 1000);
+                    document.getElementById("dialogueScreen").classList.add("opacity-0");
+                    setTimeout(() => document.getElementById("polaroidStack").classList.replace("opacity-0", "opacity-100"), 1000);
                     return;
                 }
-                dialogueText.textContent = lines[index];
-                dialogueText.classList.replace("opacity-0", "opacity-100");
+                text.textContent = lines[index];
+                text.classList.replace("opacity-0", "opacity-100");
                 setTimeout(() => {
-                    dialogueText.classList.replace("opacity-100", "opacity-0");
+                    text.classList.replace("opacity-100", "opacity-0");
                     index++;
                     setTimeout(showLine, 1000);
                 }, 3000);
             }
-
             window.onload = () => setTimeout(showLine, 1000);
 
-            /* SWIPE LOGIC */
+            /* Swipe Logic */
             const polaroids = document.querySelectorAll(".swipeable");
-            let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0, heartTimer = 0;
+            let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
 
-            polaroids.forEach(card => card.addEventListener("pointerdown", startSwipe));
-
-            function startSwipe(e) {
+            polaroids.forEach(card => card.addEventListener("pointerdown", e => {
                 activeCard = e.currentTarget;
                 activeCard.classList.remove("polaroid-transition");
                 startX = e.clientX; startY = e.clientY;
                 activeCard.setPointerCapture(e.pointerId);
-                activeCard.addEventListener("pointermove", onSwipe);
-                activeCard.addEventListener("pointerup", endSwipe);
-                spawnHeart(e.clientX, e.clientY);
-            }
+            }));
 
-            function onSwipe(e) {
+            window.addEventListener("pointermove", e => {
                 if (!activeCard) return;
                 currentX = e.clientX - startX;
                 currentY = e.clientY - startY;
                 activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentX * 0.1}deg)`;
-                if (++heartTimer % 5 === 0) spawnHeart(e.clientX, e.clientY);
-            }
+                if (Math.random() > 0.8) spawnHeart(e.clientX, e.clientY);
+            });
 
-            function endSwipe(e) {
+            window.addEventListener("pointerup", e => {
                 if (!activeCard) return;
-                activeCard.releasePointerCapture(e.pointerId);
-                activeCard.removeEventListener("pointermove", onSwipe);
-                activeCard.removeEventListener("pointerup", endSwipe);
                 activeCard.classList.add("polaroid-transition");
-
                 if (Math.abs(currentX) > 150) {
-                    const direction = currentX > 0 ? 1 : -1;
-                    activeCard.style.transform = `translate(${direction * 1000}px, ${currentY}px) rotate(${direction * 45}deg)`;
+                    const dir = currentX > 0 ? 1 : -1;
+                    activeCard.style.transform = `translate(${dir * 1000}px, ${currentY}px) rotate(${dir * 45}deg)`;
                     activeCard.style.opacity = "0";
-                    const cardToRemove = activeCard;
-                    setTimeout(() => {
-                        cardToRemove.remove();
-                        cardsLeft--;
-                        if (cardsLeft === 0) showFinalScreen();
+                    setTimeout(() => { 
+                        activeCard.remove(); 
+                        if (--cardsLeft === 0) triggerEnvelope();
                     }, 500);
-                } else {
-                    activeCard.style.transform = "";
-                }
-                activeCard = null; currentX = 0; currentY = 0;
-            }
+                } else { activeCard.style.transform = ""; }
+                activeCard = null;
+            });
 
-            function showFinalScreen() {
-                polaroidStack.classList.replace("opacity-100", "opacity-0");
+            /* Envelope Logic */
+            function triggerEnvelope() {
+                document.getElementById("polaroidStack").classList.replace("opacity-100", "opacity-0");
+                const section = document.getElementById("envelopeSection");
                 setTimeout(() => {
-                    polaroidStack.remove();
-                    finalScreen.classList.remove("pointer-events-none");
-                    finalScreen.classList.add("opacity-100");
+                    section.classList.remove("pointer-events-none");
+                    section.classList.add("opacity-100");
                 }, 1000);
             }
 
-            /* RUNAWAY BUTTON LOGIC */
-            function moveNoButton() {
-                const btn = document.getElementById("noButton");
-                // Calculate random position within the viewport
-                const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-                const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-                
-                btn.style.position = "fixed";
-                btn.style.left = x + "px";
-                btn.style.top = y + "px";
+            function openEnvelope() {
+                document.getElementById("envelope").classList.add("open");
             }
 
-            function handleYes() {
+            /* Buttons Logic */
+            function moveNoButton() {
+                const btn = document.getElementById("noButton");
+                // Allow "No" to move anywhere on screen, even outside paper
+                btn.style.position = "fixed";
+                btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+                btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+                btn.style.zIndex = "999";
+            }
+
+            function handleYes(e) {
+                e.stopPropagation(); // Don't trigger envelope click
                 document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
-                document.getElementById("noButton").remove();
-                // Create a burst of hearts
-                for(let i=0; i<30; i++) {
-                    setTimeout(() => {
-                        spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
-                    }, i * 50);
+                document.getElementById("noButton").style.display = "none";
+                for(let i=0; i<50; i++) {
+                    setTimeout(() => spawnHeart(Math.random()*window.innerWidth, Math.random()*window.innerHeight), i*30);
                 }
             }
 
             function spawnHeart(x, y) {
                 const heart = document.createElement("div");
-                heart.className = "heart";
-                heart.textContent = ["💖", "💗", "❤️", "💕"][Math.floor(Math.random() * 4)];
+                heart.className = "heart-particle";
+                heart.textContent = "💖";
                 heart.style.left = x + "px"; heart.style.top = y + "px";
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 800);
