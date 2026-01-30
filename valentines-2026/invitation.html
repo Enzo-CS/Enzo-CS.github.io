@@ -23,13 +23,13 @@
         <style>
             .romantic-font { font-family: 'La Belle Aurore', cursive; }
 
-            /* Part 2: Polaroid Styles */
+            /* PART 2: Increased Polaroid Size (Original 250px -> 375px) */
             .polaroid {
                 background: white;
-                padding: 12px 12px 24px;
-                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                padding: 18px 18px 36px;
+                box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
                 border-radius: 4px;
-                width: 250px;
+                width: 375px; /* 50% increase from 250px */
                 cursor: grab;
                 user-select: none;
                 touch-action: none;
@@ -40,15 +40,20 @@
             }
             .polaroid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; pointer-events: none; }
 
-            /* Part 3: The White Box (Letter) */
+            /* PART 3: Increased Letter Box Size */
             .invitation-box {
                 background: white;
-                border-radius: 40px; /* Curved borders */
-                padding: 40px;
-                box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-                max-width: 90%;
-                width: 450px;
+                border-radius: 50px;
+                padding: 60px;
+                box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+                max-width: 95%;
+                width: 650px; /* Increased width */
+                min-height: 400px; /* Increased height */
                 text-align: center;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
             }
 
             .heart-particle {
@@ -69,46 +74,46 @@
         </div>
 
         <div id="polaroidStack" class="fixed inset-0 flex items-center justify-center opacity-0 z-40 pointer-events-none transition-opacity duration-1000">
-            <div class="relative w-[300px] h-[400px] flex items-center justify-center">
-                <div class="polaroid swipeable rotate-[3deg] z-[10]">
-                    <img src="https://picsum.photos/300?random=1" /><p class="romantic-font text-center mt-2 text-gray-700 text-lg">Our first memory 💕</p>
+            <div class="relative w-[400px] h-[500px] flex items-center justify-center">
+                <div class="polaroid swipeable rotate-[4deg] z-[10]">
+                    <img src="https://picsum.photos/400?random=1" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">Our first memory 💕</p>
                 </div>
-                <div class="polaroid swipeable rotate-[-5deg] z-[20]">
-                    <img src="https://picsum.photos/300?random=2" /><p class="romantic-font text-center mt-2 text-gray-700 text-lg">Endless laughs</p>
+                <div class="polaroid swipeable rotate-[-6deg] z-[20]">
+                    <img src="https://picsum.photos/400?random=2" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">Endless laughs</p>
                 </div>
-                <div class="polaroid swipeable rotate-[8deg] z-[30]">
-                    <img src="https://picsum.photos/300?random=3" /><p class="romantic-font text-center mt-2 text-gray-700 text-lg">Late night talks 🌙</p>
+                <div class="polaroid swipeable rotate-[9deg] z-[30]">
+                    <img src="https://picsum.photos/400?random=3" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">Late night talks 🌙</p>
                 </div>
-                <div class="polaroid swipeable rotate-[-10deg] z-[40]">
-                    <img src="https://picsum.photos/300?random=4" /><p class="romantic-font text-center mt-2 text-gray-700 text-lg">Stolen moments</p>
+                <div class="polaroid swipeable rotate-[-11deg] z-[40]">
+                    <img src="https://picsum.photos/400?random=4" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">Stolen moments</p>
                 </div>
-                <div class="polaroid swipeable rotate-[5deg] z-[50]">
-                    <img src="https://picsum.photos/300?random=5" /><p class="romantic-font text-center mt-2 text-gray-700 text-lg">Just us 💖</p>
+                <div class="polaroid swipeable rotate-[6deg] z-[50]">
+                    <img src="https://picsum.photos/400?random=5" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">Just us 💖</p>
                 </div>
-                <div class="polaroid swipeable rotate-[-2deg] z-[60]">
-                    <img src="https://picsum.photos/300?random=6" /><p class="romantic-font text-center mt-2 text-gray-700 text-lg">Forever vibes</p>
+                <div class="polaroid swipeable rotate-[-3deg] z-[60]">
+                    <img src="https://picsum.photos/400?random=6" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">Forever vibes</p>
                 </div>
             </div>
         </div>
 
-        <div id="finalSection" class="fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 z-30">
-            <div class="invitation-box flex flex-col items-center">
-                <h2 class="romantic-font text-custom-red text-5xl md:text-6xl mb-8 font-bold leading-tight">
+        <div id="finalSection" class="fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 z-50">
+            <div class="invitation-box">
+                <h2 class="romantic-font text-custom-red text-6xl md:text-7xl mb-10 font-bold leading-tight">
                     Will you be my Valentine?
                 </h2>
                 
-                <div class="flex flex-col sm:flex-row gap-6 w-full justify-center items-center mt-4">
-                    <button onclick="handleYes()" class="bg-custom-red text-white px-12 py-3 rounded-full text-3xl romantic-font shadow-lg hover:scale-110 transition-transform active:scale-95">
+                <div class="flex flex-col sm:flex-row gap-10 w-full justify-center items-center mt-6">
+                    <button id="yesButton" onclick="handleYes()" class="bg-custom-red text-white px-16 py-4 rounded-full text-4xl romantic-font shadow-xl hover:scale-110 transition-transform active:scale-95 z-[60]">
                         Yes!
                     </button>
 
-                    <button id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton()" class="border-2 border-custom-red text-custom-red px-12 py-3 rounded-full text-3xl romantic-font transition-all duration-200">
+                    <button id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton()" class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-all duration-200 z-[60]">
                         No
                     </button>
                 </div>
 
-                <div id="successMessage" class="mt-8 opacity-0 transition-opacity duration-1000">
-                    <p class="romantic-font text-custom-red text-4xl">Yay! See you on the 14th! 💖</p>
+                <div id="successMessage" class="mt-10 opacity-0 transition-opacity duration-1000">
+                    <p class="romantic-font text-custom-red text-5xl">Yay! See you then! 💖</p>
                 </div>
             </div>
         </div>
@@ -118,7 +123,7 @@
             const lines = ["hey baby", "i love you", "be my Valentine 💖"];
             let cardsLeft = document.querySelectorAll(".swipeable").length;
 
-            /* --- PART 1: DIALOGUE --- */
+            /* --- DIALOGUE --- */
             function showLine() {
                 const text = document.getElementById("dialogueText");
                 const screen = document.getElementById("dialogueScreen");
@@ -152,7 +157,7 @@
 
             window.onload = () => setTimeout(showLine, 1000);
 
-            /* --- PART 2: SWIPE LOGIC --- */
+            /* --- SWIPE LOGIC --- */
             let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
 
             document.querySelectorAll(".swipeable").forEach(card => {
@@ -177,9 +182,9 @@
                 activeCard.releasePointerCapture(e.pointerId);
                 activeCard.classList.add("polaroid-transition");
 
-                if (Math.abs(currentX) > 130) {
+                if (Math.abs(currentX) > 150) {
                     const dir = currentX > 0 ? 1 : -1;
-                    activeCard.style.transform = `translate(${dir * 1000}px, ${currentY}px) rotate(${dir * 45}deg)`;
+                    activeCard.style.transform = `translate(${dir * 1200}px, ${currentY}px) rotate(${dir * 60}deg)`;
                     activeCard.style.opacity = "0";
                     const toRemove = activeCard;
                     setTimeout(() => { 
@@ -191,34 +196,28 @@
                 activeCard = null; currentX = 0; currentY = 0;
             });
 
-            /* --- PART 3: FINAL BOX --- */
+            /* --- FINAL SECTION --- */
             function startPart3() {
-                document.getElementById("polaroidStack").classList.add("opacity-0");
-                setTimeout(() => {
-                    const section = document.getElementById("finalSection");
-                    section.classList.remove("pointer-events-none");
-                    section.classList.add("opacity-100");
-                }, 1000);
+                // Ensure everything else is gone and clickable
+                document.getElementById("polaroidStack").classList.add("hidden");
+                const section = document.getElementById("finalSection");
+                section.classList.remove("pointer-events-none");
+                section.classList.add("opacity-100");
             }
 
             function moveNoButton() {
                 const btn = document.getElementById("noButton");
-                // By setting position to fixed, it ignores the white box boundaries
                 btn.style.position = "fixed";
-                
-                // Calculate random position on the entire screen
                 const newX = Math.random() * (window.innerWidth - btn.offsetWidth);
                 const newY = Math.random() * (window.innerHeight - btn.offsetHeight);
-                
                 btn.style.left = newX + "px";
                 btn.style.top = newY + "px";
-                btn.style.zIndex = "1000"; // Ensure it stays on top of everything
             }
 
             function handleYes() {
                 document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
-                document.getElementById("noButton").style.display = "none";
-                for(let i=0; i<40; i++) {
+                document.getElementById("noButton").classList.add("hidden");
+                for(let i=0; i<50; i++) {
                     setTimeout(() => spawnHeart(Math.random()*window.innerWidth, Math.random()*window.innerHeight), i*50);
                 }
             }
