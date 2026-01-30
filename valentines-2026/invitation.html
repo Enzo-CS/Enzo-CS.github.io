@@ -1,23 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valentine 💖</title>
 
-    <!-- HEADER -->
-    <head>
-        <meta charset="UTF-8">
-        <title>Page Title</title>
-    </head>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-    <!-- BODY -->
-    <body>
-        <h1>My First Heading</h1>
-        <p>My first paragraph.</p>
-    </body>
+<body class="bg-black overflow-hidden">
 
-    <!-- FOOTER -->
-    <footer>
+  <!-- Dialogue Screen -->
+  <div
+    id="dialogueScreen"
+    class="fixed inset-0 flex items-center justify-center"
+  >
+    <p
+      id="dialogueText"
+      class="text-pink-400 text-3xl md:text-4xl font-semibold tracking-wide opacity-0 transition-opacity duration-1000"
+    >
+      <!-- Text injected by JS -->
+    </p>
+  </div>
 
-    </footer>
+  <script>
+    const lines = [
+      "Hey baby",
+      "I love you",
+      "Be my Valentine 💖"
+    ];
 
+    const dialogueText = document.getElementById("dialogueText");
+    let index = 0;
+
+    function showLine() {
+      if (index >= lines.length) {
+        // END OF PART 1
+        // Later we will transition to the polaroid section
+        return;
+      }
+
+      dialogueText.textContent = lines[index];
+      dialogueText.classList.remove("opacity-0");
+      dialogueText.classList.add("opacity-100");
+
+      // Stay visible
+      setTimeout(() => {
+        dialogueText.classList.remove("opacity-100");
+        dialogueText.classList.add("opacity-0");
+
+        index++;
+        setTimeout(showLine, 1000); // wait before next line
+      }, 2000);
+    }
+
+    // Start after page loads
+    window.onload = () => {
+      setTimeout(showLine, 500);
+    };
+  </script>
+
+</body>
 </html>
-
-
