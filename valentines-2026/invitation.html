@@ -2,14 +2,13 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>Invitation</title>
+        <title>Valentine 💖</title>
 
         <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
 
         <script src="https://cdn.tailwindcss.com"></script>
         
         <script>
-            // 1. Implementing your custom colors into the Tailwind Config
             tailwind.config = {
                 theme: {
                     extend: {
@@ -23,9 +22,7 @@
         </script>
 
         <style>
-            .romantic-font {
-                font-family: 'La Belle Aurore', cursive;
-            }
+            .romantic-font { font-family: 'La Belle Aurore', cursive; }
 
             .polaroid {
                 background: white;
@@ -42,9 +39,7 @@
                 transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
             }
 
-            .polaroid:active {
-                cursor: grabbing;
-            }
+            .polaroid:active { cursor: grabbing; }
 
             .polaroid img {
                 width: 100%;
@@ -62,96 +57,96 @@
             }
 
             @keyframes floatUp {
-                from {
-                    transform: translateY(0) scale(1) rotate(0deg);
-                    opacity: 1;
-                }
-                to {
-                    transform: translateY(-100px) scale(1.5) rotate(20deg);
-                    opacity: 0;
-                }
+                from { transform: translateY(0) scale(1); opacity: 1; }
+                to { transform: translateY(-100px) scale(1.5); opacity: 0; }
             }
+
+            /* Pulse effect for the Yes button */
+            @keyframes pulse-soft {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+            .animate-pulse-soft { animation: pulse-soft 2s infinite; }
         </style>
     </head>
 
     <body class="bg-custom-pink overflow-hidden">
 
-        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-20">
-            <p
-                id="dialogueText"
-                /* 3. Applied 'text-custom-red' here */
-                class="romantic-font text-custom-red text-7xl font-bold
-                        opacity-0 transition-opacity duration-[1500ms]
-                        text-center drop-shadow-md"
-            >
-            </p>
+        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-30 transition-opacity duration-1000">
+            <p id="dialogueText" class="romantic-font text-custom-red text-7xl font-bold opacity-0 transition-opacity duration-[1500ms] text-center drop-shadow-md"></p>
         </div>
 
-        <div
-            id="polaroidStack"
-            class="fixed inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[2000ms] z-10"
-        >
+        <div id="polaroidStack" class="fixed inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[2000ms] z-20">
             <div class="relative w-[300px] h-[400px] flex items-center justify-center">
-
                 <div class="polaroid swipeable absolute rotate-[3deg] z-[1]">
                     <img src="https://picsum.photos/300?random=6" />
                     <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Forever vibes</p>
                 </div>
-
                 <div class="polaroid swipeable absolute rotate-[-12deg] z-[2]">
                     <img src="https://picsum.photos/300?random=5" />
                     <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Just us 💖</p>
                 </div>
-
                 <div class="polaroid swipeable absolute rotate-[10deg] z-[3]">
                     <img src="https://picsum.photos/300?random=4" />
                     <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Stolen moments</p>
                 </div>
-
                 <div class="polaroid swipeable absolute rotate-[-2deg] z-[4]">
                     <img src="https://picsum.photos/300?random=3" />
                     <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Late night talks 🌙</p>
                 </div>
-
                 <div class="polaroid swipeable absolute rotate-[5deg] z-[5]">
                     <img src="https://picsum.photos/300?random=2" />
                     <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Endless laughs</p>
                 </div>
-
                 <div class="polaroid swipeable absolute rotate-[-8deg] z-[6]">
                     <img src="https://picsum.photos/300?random=1" />
                     <p class="romantic-font text-center mt-2 text-gray-700 text-lg">Our first memory 💕</p>
                 </div>
+            </div>
+        </div>
 
+        <div id="finalScreen" class="fixed inset-0 flex flex-col items-center justify-center opacity-0 pointer-events-none transition-opacity duration-[2000ms] z-10 p-6 text-center">
+            <h1 class="romantic-font text-custom-red text-6xl md:text-8xl mb-12 drop-shadow-md">
+                Will you be my Valentine?
+            </h1>
+            
+            <div class="flex gap-8 items-center relative w-full justify-center">
+                <button onclick="handleYes()" class="romantic-font bg-custom-red text-white px-12 py-4 rounded-full text-4xl shadow-xl animate-pulse-soft hover:scale-110 transition-transform">
+                    Yes!
+                </button>
+
+                <button id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton()" class="romantic-font border-2 border-custom-red text-custom-red px-12 py-4 rounded-full text-4xl transition-all duration-200">
+                    No
+                </button>
+            </div>
+
+            <div id="successMessage" class="mt-12 opacity-0 transition-opacity duration-1000">
+                <p class="romantic-font text-custom-red text-4xl">Yay! I knew you'd say yes! 💖✨</p>
             </div>
         </div>
 
         <script>
-            /* PART 1 LOGIC */
-            const lines = ["hey baby", "i love you", "be my valentine 💖"];
+            /* LOGIC FOR TRANSITIONS */
+            const lines = ["hey baby", "i love you", "be my Valentine 💖"];
             const dialogueText = document.getElementById("dialogueText");
             const dialogueScreen = document.getElementById("dialogueScreen");
             const polaroidStack = document.getElementById("polaroidStack");
+            const finalScreen = document.getElementById("finalScreen");
             let index = 0;
+            let cardsLeft = 6; // Match number of polaroids
 
             function showLine() {
                 if (index >= lines.length) {
-                    dialogueScreen.classList.add("pointer-events-none");
-                    dialogueScreen.style.opacity = "0";
+                    dialogueScreen.classList.add("opacity-0", "pointer-events-none");
                     setTimeout(() => {
-                        polaroidStack.classList.remove("opacity-0");
-                        polaroidStack.classList.add("opacity-100");
+                        polaroidStack.classList.replace("opacity-0", "opacity-100");
                     }, 1000);
                     return;
                 }
-
                 dialogueText.textContent = lines[index];
-                dialogueText.classList.remove("opacity-0");
-                dialogueText.classList.add("opacity-100");
-
+                dialogueText.classList.replace("opacity-0", "opacity-100");
                 setTimeout(() => {
-                    dialogueText.classList.remove("opacity-100");
-                    dialogueText.classList.add("opacity-0");
+                    dialogueText.classList.replace("opacity-100", "opacity-0");
                     index++;
                     setTimeout(showLine, 1000);
                 }, 3000);
@@ -195,18 +190,54 @@
                     activeCard.style.transform = `translate(${direction * 1000}px, ${currentY}px) rotate(${direction * 45}deg)`;
                     activeCard.style.opacity = "0";
                     const cardToRemove = activeCard;
-                    setTimeout(() => cardToRemove.remove(), 500);
+                    setTimeout(() => {
+                        cardToRemove.remove();
+                        cardsLeft--;
+                        if (cardsLeft === 0) showFinalScreen();
+                    }, 500);
                 } else {
                     activeCard.style.transform = "";
                 }
                 activeCard = null; currentX = 0; currentY = 0;
             }
 
+            function showFinalScreen() {
+                polaroidStack.classList.replace("opacity-100", "opacity-0");
+                setTimeout(() => {
+                    polaroidStack.remove();
+                    finalScreen.classList.remove("pointer-events-none");
+                    finalScreen.classList.add("opacity-100");
+                }, 1000);
+            }
+
+            /* RUNAWAY BUTTON LOGIC */
+            function moveNoButton() {
+                const btn = document.getElementById("noButton");
+                // Calculate random position within the viewport
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+                
+                btn.style.position = "fixed";
+                btn.style.left = x + "px";
+                btn.style.top = y + "px";
+            }
+
+            function handleYes() {
+                document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
+                document.getElementById("noButton").remove();
+                // Create a burst of hearts
+                for(let i=0; i<30; i++) {
+                    setTimeout(() => {
+                        spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+                    }, i * 50);
+                }
+            }
+
             function spawnHeart(x, y) {
                 const heart = document.createElement("div");
                 heart.className = "heart";
                 heart.textContent = ["💖", "💗", "❤️", "💕"][Math.floor(Math.random() * 4)];
-                heart.style.left = (x - 10) + "px"; heart.style.top = (y - 10) + "px";
+                heart.style.left = x + "px"; heart.style.top = y + "px";
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 800);
             }
