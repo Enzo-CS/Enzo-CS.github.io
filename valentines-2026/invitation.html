@@ -4,30 +4,106 @@
         <meta charset="UTF-8" />
         <title>Valentine 💖</title>
 
+        <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
-        
+
+        <!-- Tailwind CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
 
         <style>
             .romantic-font {
-                font-family: 'Dancing Script', cursive;
+                font-family: 'La Belle Aurore', cursive;
+            }
+
+            .polaroid {
+                background: white;
+                padding: 12px 12px 24px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+                border-radius: 4px;
+                width: 220px;
+            }
+
+            .polaroid img {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
             }
         </style>
     </head>
 
     <body class="bg-white overflow-hidden">
 
-        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center">
+        <!-- PART 1: Dialogue Screen -->
+        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-20">
             <p
                 id="dialogueText"
-                class="romantic-font text-pink-400 text-6xl md:text-6xl font-bold 
+                class="romantic-font text-pink-400 text-6xl font-bold
                         opacity-0 transition-opacity duration-[1500ms]
                         text-center drop-shadow-sm"
             >
             </p>
         </div>
 
+        <!-- PART 2: Polaroid Stack -->
+        <div
+            id="polaroidStack"
+            class="fixed inset-0 flex items-center justify-center opacity-0 transition-opacity duration-[2000ms] z-10"
+        >
+            <div class="relative w-[500px] h-[500px]">
+
+                <!-- Polaroid 1 -->
+                <div class="polaroid absolute top-20 left-28 rotate-[-8deg] z-[6]">
+                    <img src="https://picsum.photos/300?random=1" />
+                    <p class="romantic-font text-center mt-2 text-gray-700">
+                        Our first memory 💕
+                    </p>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid absolute top-24 left-36 rotate-[5deg] z-[5]">
+                    <img src="https://picsum.photos/300?random=2" />
+                    <p class="romantic-font text-center mt-2 text-gray-700">
+                        Endless laughs
+                    </p>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid absolute top-32 left-24 rotate-[-2deg] z-[4]">
+                    <img src="https://picsum.photos/300?random=3" />
+                    <p class="romantic-font text-center mt-2 text-gray-700">
+                        Late night talks 🌙
+                    </p>
+                </div>
+
+                <!-- Polaroid 4 -->
+                <div class="polaroid absolute top-36 left-40 rotate-[10deg] z-[3]">
+                    <img src="https://picsum.photos/300?random=4" />
+                    <p class="romantic-font text-center mt-2 text-gray-700">
+                        Stolen moments
+                    </p>
+                </div>
+
+                <!-- Polaroid 5 -->
+                <div class="polaroid absolute top-44 left-30 rotate-[-12deg] z-[2]">
+                    <img src="https://picsum.photos/300?random=5" />
+                    <p class="romantic-font text-center mt-2 text-gray-700">
+                        Just us 💖
+                    </p>
+                </div>
+
+                <!-- Polaroid 6 -->
+                <div class="polaroid absolute top-48 left-34 rotate-[3deg] z-[1]">
+                    <img src="https://picsum.photos/300?random=6" />
+                    <p class="romantic-font text-center mt-2 text-gray-700">
+                        Forever vibes
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
         <script>
+            /* PART 1 LOGIC */
             const lines = [
                 "Testing",
                 "Hey baby",
@@ -36,10 +112,23 @@
             ];
 
             const dialogueText = document.getElementById("dialogueText");
+            const dialogueScreen = document.getElementById("dialogueScreen");
+            const polaroidStack = document.getElementById("polaroidStack");
+
             let index = 0;
 
             function showLine() {
-                if (index >= lines.length) return;
+                if (index >= lines.length) {
+                    // Transition to Part 2
+                    dialogueScreen.classList.add("opacity-0");
+
+                    setTimeout(() => {
+                        polaroidStack.classList.remove("opacity-0");
+                        polaroidStack.classList.add("opacity-100");
+                    }, 1500);
+
+                    return;
+                }
 
                 dialogueText.textContent = lines[index];
                 dialogueText.classList.remove("opacity-0");
@@ -50,7 +139,7 @@
                     dialogueText.classList.add("opacity-0");
 
                     index++;
-                    setTimeout(showLine, 1500); 
+                    setTimeout(showLine, 1500);
                 }, 3500);
             }
 
@@ -58,5 +147,6 @@
                 setTimeout(showLine, 3000);
             };
         </script>
+
     </body>
 </html>
