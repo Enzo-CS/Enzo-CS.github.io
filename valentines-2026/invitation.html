@@ -21,12 +21,37 @@
                 box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
                 border-radius: 4px;
                 width: 220px;
+                cursor: grab;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                user-select: none;
+            }
+
+            .polaroid:active {
+                cursor: grabbing;
             }
 
             .polaroid img {
                 width: 100%;
                 aspect-ratio: 1 / 1;
                 object-fit: cover;
+            }
+
+            .heart {
+                position: absolute;
+                font-size: 16px;
+                pointer-events: none;
+                animation: floatUp 1s ease-out forwards;
+            }
+
+            @keyframes floatUp {
+                from {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateY(-40px) scale(1.5);
+                    opacity: 0;
+                }
             }
         </style>
     </head>
@@ -52,7 +77,7 @@
             <div class="relative w-[500px] h-[500px]">
 
                 <!-- Polaroid 1 -->
-                <div class="polaroid absolute top-20 left-28 rotate-[-8deg] z-[6]">
+                <div class="polaroid swipeable absolute top-20 left-28 rotate-[-8deg] z-[6]">
                     <img src="https://picsum.photos/300?random=1" />
                     <p class="romantic-font text-center mt-2 text-gray-700">
                         Our first memory 💕
@@ -60,7 +85,7 @@
                 </div>
 
                 <!-- Polaroid 2 -->
-                <div class="polaroid absolute top-24 left-36 rotate-[5deg] z-[5]">
+                <div class="polaroid swipeable absolute top-24 left-36 rotate-[5deg] z-[5]">
                     <img src="https://picsum.photos/300?random=2" />
                     <p class="romantic-font text-center mt-2 text-gray-700">
                         Endless laughs
@@ -68,7 +93,7 @@
                 </div>
 
                 <!-- Polaroid 3 -->
-                <div class="polaroid absolute top-32 left-24 rotate-[-2deg] z-[4]">
+                <div class="polaroid swipeable absolute top-32 left-24 rotate-[-2deg] z-[4]">
                     <img src="https://picsum.photos/300?random=3" />
                     <p class="romantic-font text-center mt-2 text-gray-700">
                         Late night talks 🌙
@@ -76,7 +101,7 @@
                 </div>
 
                 <!-- Polaroid 4 -->
-                <div class="polaroid absolute top-36 left-40 rotate-[10deg] z-[3]">
+                <div class="polaroid swipeable absolute top-36 left-40 rotate-[10deg] z-[3]">
                     <img src="https://picsum.photos/300?random=4" />
                     <p class="romantic-font text-center mt-2 text-gray-700">
                         Stolen moments
@@ -84,7 +109,7 @@
                 </div>
 
                 <!-- Polaroid 5 -->
-                <div class="polaroid absolute top-44 left-30 rotate-[-12deg] z-[2]">
+                <div class="polaroid swipeable absolute top-44 left-30 rotate-[-12deg] z-[2]">
                     <img src="https://picsum.photos/300?random=5" />
                     <p class="romantic-font text-center mt-2 text-gray-700">
                         Just us 💖
@@ -92,7 +117,7 @@
                 </div>
 
                 <!-- Polaroid 6 -->
-                <div class="polaroid absolute top-48 left-34 rotate-[3deg] z-[1]">
+                <div class="polaroid swipeable absolute top-48 left-34 rotate-[3deg] z-[1]">
                     <img src="https://picsum.photos/300?random=6" />
                     <p class="romantic-font text-center mt-2 text-gray-700">
                         Forever vibes
@@ -146,6 +171,80 @@
             window.onload = () => {
                 setTimeout(showLine, 3000);
             };
+
+            const polaroids = document.querySelectorAll(".swipeable");
+            let activeCard = null;
+            let startX = 0;
+            let startY = 0;
+            let currentX = 0;
+            let currentY = 0;
+
+            polaroids.forEach(card => {
+                card.addEventListener("pointerdown", startSwipe);
+            });
+
+            function startSwipe(e) {
+                activeCard = e.currentTarget;
+                startX = e.clientX;
+                startY = e.clientY;
+
+                activeCard.setPointerCapture(e.pointerId);
+
+                activeCard.addEventListener("pointermove", onSwipe);
+                activeCard.addEventListener("pointerup", endSwipe);
+            }
+
+            function onSwipe(e) {
+                currentX = e.clientX - startX;
+                currentY = e.clientY - startY;
+
+                activeCard.style.transform = `
+                    translate(${currentX}px, ${currentY}px)
+                    rotate(${currentX * 0.05}deg)
+                `;
+
+                spawnHeart(e.clientX, e.clientY);
+            }
+
+            function endSwipe(e) {
+                activeCard.releasePointerCapture(e.pointerId);
+
+                const threshold = 120;
+
+                if (Math.abs(currentX) > threshold) {
+                    // Swipe away
+                    activeCard.style.transform = `
+                        translate(${currentX * 2}px, ${currentY}px)
+                        rotate(${currentX * 0.2}deg)
+                    `;
+                    activeCard.style.opacity = "0";
+
+                    setTimeout(() => {
+                        activeCard.remove();
+                    }, 300);
+                } else {
+                    // Snap back
+                    activeCard.style.transform = "";
+                }
+
+                activeCard.removeEventListener("pointermove", onSwipe);
+                activeCard.removeEventListener("pointerup", endSwipe);
+
+                activeCard = null;
+                currentX = currentY = 0;
+            }
+
+            function spawnHeart(x, y) {
+                const heart = document.createElement("div");
+                heart.className = "heart";
+                heart.textContent = "💖";
+                heart.style.left = x + "px";
+                heart.style.top = y + "px";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 1000);
+            }
         </script>
 
     </body>
