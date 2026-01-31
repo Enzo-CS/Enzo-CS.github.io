@@ -156,8 +156,8 @@
                 const screen = document.getElementById("dialogueScreen");
 
                 if (index === 0) {
-                    audioCtx.resume();
-                    audio.play();
+                    audioCtx.resume().catch(() => {});
+                    audio.play().catch(() => {});
                 }
 
                 if (index >= lines.length) {
@@ -187,13 +187,9 @@
                 stack.classList.add("opacity-100");
             }
 
-            window.addEventListener('click', () => {
-                if (index === 0) {
-                    audioCtx.resume().then(() => {
-                        showLine();
-                    });
-                }
-            }, { once: true });
+            window.addEventListener('load', () => {
+                showLine();
+            });
 
             let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
 
