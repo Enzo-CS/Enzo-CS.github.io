@@ -5,7 +5,7 @@
         <title>Valentine 💖</title>
 
         <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
         
         <script>
@@ -23,6 +23,7 @@
 
         <style>
             .romantic-font { font-family: 'La Belle Aurore', cursive; }
+            .polaroid-font { font-family: 'Patrick Hand', cursive; }
 
             /* PART 2: Increased Polaroid Size (Original 250px -> 375px) */
             .polaroid {
@@ -77,19 +78,19 @@
         <div id="polaroidStack" class="fixed inset-0 flex items-center justify-center opacity-0 z-40 pointer-events-none transition-opacity duration-1000">
             <div class="relative w-[400px] h-[500px] flex items-center justify-center">
                 <div class="polaroid swipeable rotate-[4deg] z-[10]">
-                    <img src="./images/5.JPEG" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">ror 🦖</p>
+                    <img src="./images/5.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">ror 🦖</p>
                 </div>
                 <div class="polaroid swipeable rotate-[-6deg] z-[20]">
-                    <img src="./images/4.JPEG" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">bleh 😛😛</p>
+                    <img src="./images/4.jpg" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">bleh 😛😛</p>
                 </div>
                 <div class="polaroid swipeable rotate-[9deg] z-[30]">
-                    <img src="./images/3.JPEG" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">funny 😭</p>
+                    <img src="./images/3.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">funny 😭</p>
                 </div>
                 <div class="polaroid swipeable rotate-[-11deg] z-[40]">
-                    <img src="./images/2.jpg" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">goofy ahhh</p>
+                    <img src="./images/2.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">goofy ahhh</p>
                 </div>
                 <div class="polaroid swipeable rotate-[6deg] z-[50]">
-                    <img src="./images/1.JPEG" /><p class="romantic-font text-center mt-3 text-gray-700 text-2xl">what u lookin at</p>
+                    <img src="./images/1.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">what u lookin at</p>
                 </div>
             </div>
         </div>
@@ -98,10 +99,10 @@
             <div class="invitation-box">
                 <h2 class="romantic-font text-custom-red text-6xl md:text-7xl mb-10 font-bold leading-tight text-center">
                     <span class="block">will you be my</span>
-                    <span class="block font-extrabold">Valentine?</span>
+                    <span class="block font-extrabold text-[1.25em]">Valentine?</span>
                 </h2>
-                
-                <div class="flex flex-col sm:flex-row gap-10 w-full justify-center items-center mt-6">
+
+                <div class="flex flex-col sm:flex-row gap-10 w-full justify-center items-center mt-6 min-h-[120px]">
                     <button id="yesButton" onclick="handleYes()" class="bg-custom-red text-white px-16 py-4 rounded-full text-4xl romantic-font shadow-xl hover:scale-110 transition-transform active:scale-95 z-[60]">
                         Yes!
                     </button>
@@ -209,11 +210,11 @@
 
             function moveNoButton() {
                 const btn = document.getElementById("noButton");
-                btn.style.position = "fixed";
-                const newX = Math.random() * (window.innerWidth - btn.offsetWidth);
-                const newY = Math.random() * (window.innerHeight - btn.offsetHeight);
-                btn.style.left = newX + "px";
-                btn.style.top = newY + "px";
+
+                const x = (Math.random() - 0.5) * 400;
+                const y = (Math.random() - 0.5) * 200;
+
+                btn.style.transform = `translate(${x}px, ${y}px)`;
             }
 
             function handleYes() {
