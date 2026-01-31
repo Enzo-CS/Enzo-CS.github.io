@@ -31,6 +31,12 @@
                 box-shadow: 0 0 25px rgba(186, 35, 50, 0.6);
             }
 
+            @keyframes heartbeat {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+
             .polaroid {
                 background: white;
                 padding: 18px 18px 36px;
@@ -49,7 +55,6 @@
 
             .invitation-box {
                 position: relative;
-                overflow: visible;
                 background: white;
                 border-radius: 50px;
                 padding: 60px;
@@ -77,7 +82,7 @@
 
     <body class="bg-custom-pink overflow-hidden w-full h-screen">
 
-        <div id="error-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#202124] font-sans text-white">
+        <div id="error-overlay" class="fixed inset-0 z-[110] flex items-center justify-center bg-[#202124] font-sans text-white">
             <div class="max-w-md p-8">
                 <div class="mb-6">
                     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -87,28 +92,17 @@
                         <path d="M8 16a5 5 0 0 1 8 0"></path>
                     </svg>
                 </div>
-                
                 <h1 class="mb-4 text-2xl font-normal">This site can’t be reached</h1>
-                
-                <p class="mb-4 text-sm text-[#9aa0a6]">
-                    Check if there is a typo in <span class="font-semibold">asdnzbcj.com</span>.
-                </p>
-                
-                <p class="mb-6 text-sm text-[#9aa0a6]">
-                    If spelling is correct, <span class="text-[#8ab4f8] cursor-pointer">try running Windows Network Diagnostics</span>.
-                </p>
-                
-                <p class="mb-8 text-xs uppercase tracking-tight text-[#5f6368]">
-                    DNS_PROBE_FINISHED_NXDOMAIN
-                </p>
-                
+                <p class="mb-4 text-sm text-[#9aa0a6]">Check if there is a typo in <span class="font-semibold">asdnzbcj.com</span>.</p>
+                <p class="mb-6 text-sm text-[#9aa0a6]">If spelling is correct, <span class="text-[#8ab4f8] cursor-pointer">try running Windows Network Diagnostics</span>.</p>
+                <p class="mb-8 text-xs uppercase tracking-tight text-[#5f6368]">DNS_PROBE_FINISHED_NXDOMAIN</p>
                 <button id="reload-btn" class="rounded-md bg-[#8ab4f8] px-6 py-2 text-sm font-medium text-[#202124] hover:bg-[#aecbfa] transition-colors">
                     Reload
                 </button>
             </div>
         </div>
 
-        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-[100] transition-opacity duration-1000">
+        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-[100] transition-opacity duration-1000 bg-custom-pink pointer-events-none">
             <p id="dialogueText" class="romantic-font text-custom-red text-6xl md:text-8xl font-bold opacity-0 transition-opacity duration-[1500ms] text-center px-4"></p>
         </div>
 
@@ -135,29 +129,18 @@
         <div id="finalSection" class="fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 z-50">
             <div class="invitation-box">
                 <h2 class="romantic-font text-custom-red text-6xl md:text-7xl mt-6 font-bold text-center">
-                    <span class="block font-extrabold text-[1.0em] mb-2 leading-tight">
-                        will you be my
-                    </span>
+                    <span class="block font-extrabold text-[1.0em] mb-2 leading-tight">will you be my</span>
                     <div class="h-9"></div>
-                    <span class="block font-extrabold text-[1.7em] leading-none">
-                        Valentine?
-                    </span>
+                    <span class="block font-extrabold text-[1.7em] leading-none">Valentine?</span>
                 </h2>
 
                 <div class="flex flex-col sm:flex-row gap-10 w-full justify-center items-center mt-6 min-h-[120px]">
                     <button id="yesButton" onclick="handleYes()" class="bg-custom-red text-white px-16 py-4 rounded-full text-4xl romantic-font shadow-xl hover:scale-110 transition-transform active:scale-95 z-[60]">
                         Yes!
                     </button>
-
-                    <button
-                        id="noButton"
-                        onmouseenter="moveNoButton()"
-                        onclick="moveNoButton()"
-                        class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-transform duration-200 z-[60]"
-                    >   
+                    <button id="noButton" onmouseenter="moveNoButton()" onclick="moveNoButton()" class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-transform duration-200 z-[60]">   
                         No
                     </button>
-
                 </div>
 
                 <div id="successMessage" class="mt-10 opacity-0 transition-opacity duration-1000">
@@ -168,10 +151,7 @@
 
         <script>
             let index = 0;
-            const lines = [
-                "to my baby, my everything-",
-                "atheena-"
-            ];
+            const lines = ["to my baby, my everything-", "atheena-"];
             let cardsLeft = document.querySelectorAll(".swipeable").length;
 
             const audio = new Audio('./audio/valentine.mp3');
@@ -185,11 +165,6 @@
             function showLine() {
                 const text = document.getElementById("dialogueText");
                 const screen = document.getElementById("dialogueScreen");
-
-                if (index === 0) {
-                    audioCtx.resume();
-                    audio.play();
-                }
 
                 if (index >= lines.length) {
                     screen.classList.add("opacity-0");
@@ -218,16 +193,17 @@
                 stack.classList.add("opacity-100");
             }
 
-            window.addEventListener('click', () => {
-                if (index === 0) {
-                    audioCtx.resume().then(() => {
-                        showLine();
-                    });
-                }
-            }, { once: true });
+            // RELOAD BUTTON TRIGGER
+            document.getElementById('reload-btn').addEventListener('click', () => {
+                document.getElementById('error-overlay').classList.add('hidden');
+                audioCtx.resume().then(() => {
+                    audio.play();
+                    showLine();
+                });
+            });
 
+            // Swipe Logic
             let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
-
             document.querySelectorAll(".swipeable").forEach(card => {
                 card.addEventListener("pointerdown", e => {
                     activeCard = e.currentTarget;
@@ -275,105 +251,53 @@
                 const noBtn = document.getElementById("noButton");
                 const yesBtn = document.getElementById("yesButton");
                 const box = document.querySelector(".invitation-box");
-
                 noBtn.style.position = "fixed";
-
                 const padding = 20;
                 const btnRect = noBtn.getBoundingClientRect();
                 const boxRect = box.getBoundingClientRect();
-
-                let x, y;
-                let safe = false;
-
+                let x, y, safe = false;
                 while (!safe) {
                     x = Math.random() * (window.innerWidth - btnRect.width - padding * 2) + padding;
                     y = Math.random() * (window.innerHeight - btnRect.height - padding * 2) + padding;
-
                     const overlapX = x + btnRect.width > boxRect.left && x < boxRect.right;
                     const overlapY = y + btnRect.height > boxRect.top && y < boxRect.bottom;
-
                     if (!(overlapX && overlapY)) safe = true;
                 }
-
                 noBtn.style.left = `${x}px`;
                 noBtn.style.top = `${y}px`;
-
                 yesBtn.classList.remove("yes-pulse");
                 void yesBtn.offsetWidth; 
                 yesBtn.classList.add("yes-pulse");
             }
 
             function handleYes() {
-                document.getElementById("successMessage")
-                    .classList.replace("opacity-0", "opacity-100");
+                document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
                 document.getElementById("noButton").classList.add("hidden");
-
                 for (let i = 0; i < 80; i++) {
-                    setTimeout(
-                        () => spawnHeart(
-                            Math.random() * window.innerWidth,
-                            Math.random() * window.innerHeight
-                        ),
-                        i * 40
-                    );
+                    setTimeout(() => spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight), i * 40);
                 }
             }
 
             function spawnHeart(x, y) {
                 const hearts = ["💖", "💕", "💘", "💝", "❤️", "💗"];
-
-                for (let i = 0; i < 2; i++) {
-                    const heart = document.createElement("div");
-                    heart.className = "heart-particle";
-
-                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-
-                    const offsetX = (Math.random() - 0.5) * 30;
-                    const offsetY = (Math.random() - 0.5) * 30;
-
-                    const size = 20 + Math.random() * 20;
-                    const rotation = (Math.random() - 0.5) * 60;
-
-                    heart.style.left = x + offsetX + "px";
-                    heart.style.top = y + offsetY + "px";
-                    heart.style.fontSize = size + "px";
-                    heart.style.transform = `rotate(${rotation}deg)`;
-
-                    document.body.appendChild(heart);
-
-                    setTimeout(() => heart.remove(), 800);
-                }
+                const heart = document.createElement("div");
+                heart.className = "heart-particle";
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = x + "px";
+                heart.style.top = y + "px";
+                heart.style.fontSize = (20 + Math.random() * 20) + "px";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 800);
             }
 
             let lastHeartTime = 0;
-
             window.addEventListener("mousemove", (e) => {
                 const now = Date.now();
-
                 if (now - lastHeartTime > 80) {
                     spawnHeart(e.clientX, e.clientY);
                     lastHeartTime = now;
                 }
             });
-
-            const reloadBtn = document.getElementById('reload-btn');
-            const overlay = document.getElementById('error-overlay');
-
-            reloadBtn.addEventListener('click', () => {
-                // Hide the fake error screen
-                overlay.classList.add('hidden');
-                
-                // Resume audio context (Browser requirement)
-                if (audioCtx.state === 'suspended') {
-                    audioCtx.resume();
-                }
-                
-                // Start your existing animation/audio function
-                if (typeof showLine === 'function') {
-                    showLine();
-                }
-            });
-            
         </script>
     </body>
 </html>
