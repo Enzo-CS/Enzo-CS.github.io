@@ -82,47 +82,38 @@
 
     <body class="bg-custom-pink overflow-hidden w-full h-screen">
 
-        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-[100] transition-opacity duration-1000 bg-custom-pink pointer-events-none">
+        <div id="entryOverlay" class="fixed inset-0 flex flex-col items-center justify-center z-[200] bg-custom-pink transition-opacity duration-1000">
+            <button id="startBtn" class="romantic-font text-custom-red text-5xl md:text-7xl font-bold animate-bounce">
+                Open Letter 💌
+            </button>
+            <p class="polaroid-font text-custom-red mt-4">Click to begin</p>
+        </div>
+
+        <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-[100] transition-opacity duration-1000 bg-custom-pink pointer-events-none hidden">
             <p id="dialogueText" class="romantic-font text-custom-red text-6xl md:text-8xl font-bold opacity-0 transition-opacity duration-[1500ms] text-center px-4"></p>
         </div>
 
         <div id="polaroidStack" class="fixed inset-0 flex items-center justify-center opacity-0 z-40 pointer-events-none transition-opacity duration-1000">
             <div class="relative w-[400px] h-[500px] flex items-center justify-center">
-                <div class="polaroid swipeable rotate-[4deg] z-[10]">
-                    <img src="./images/5.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">ror 🦖</p>
-                </div>
-                <div class="polaroid swipeable rotate-[-6deg] z-[20]">
-                    <img src="./images/4.jpg" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">bleh 😛😛</p>
-                </div>
-                <div class="polaroid swipeable rotate-[9deg] z-[30]">
-                    <img src="./images/3.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">funny 😭</p>
-                </div>
-                <div class="polaroid swipeable rotate-[-11deg] z-[40]">
-                    <img src="./images/2.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">goofy ahhh</p>
-                </div>
-                <div class="polaroid swipeable rotate-[6deg] z-[50]">
-                    <img src="./images/1.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">what u lookin at</p>
-                </div>
+                <div class="polaroid swipeable rotate-[4deg] z-[10]"><img src="./images/5.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">ror 🦖</p></div>
+                <div class="polaroid swipeable rotate-[-6deg] z-[20]"><img src="./images/4.jpg" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">bleh 😛😛</p></div>
+                <div class="polaroid swipeable rotate-[9deg] z-[30]"><img src="./images/3.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">funny 😭</p></div>
+                <div class="polaroid swipeable rotate-[-11deg] z-[40]"><img src="./images/2.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">goofy ahhh</p></div>
+                <div class="polaroid swipeable rotate-[6deg] z-[50]"><img src="./images/1.JPEG" /><p class="polaroid-font text-center mt-3 text-gray-700 text-2xl">what u lookin at</p></div>
             </div>
         </div>
 
         <div id="finalSection" class="fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 z-50">
             <div class="invitation-box">
                 <h2 class="romantic-font text-custom-red text-6xl md:text-7xl mt-6 font-bold text-center">
-                    <span class="block font-extrabold text-[1.0em] mb-2 leading-tight">will you be my</span>
+                    <span class="block font-extrabold mb-2 leading-tight">will you be my</span>
                     <div class="h-9"></div>
                     <span class="block font-extrabold text-[1.7em] leading-none">Valentine?</span>
                 </h2>
-
                 <div class="flex flex-col sm:flex-row gap-10 w-full justify-center items-center mt-6 min-h-[120px]">
-                    <button id="yesButton" onclick="handleYes()" class="bg-custom-red text-white px-16 py-4 rounded-full text-4xl romantic-font shadow-xl hover:scale-110 transition-transform active:scale-95 z-[60]">
-                        Yes!
-                    </button>
-                    <button id="noButton" onmouseenter="moveNoButton()" onclick="moveNoButton()" class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-transform duration-200 z-[60]">   
-                        No
-                    </button>
+                    <button id="yesButton" onclick="handleYes()" class="bg-custom-red text-white px-16 py-4 rounded-full text-4xl romantic-font shadow-xl hover:scale-110 transition-transform active:scale-95 z-[60]">Yes!</button>
+                    <button id="noButton" onmouseenter="moveNoButton()" onclick="moveNoButton()" class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-transform duration-200 z-[60]">No</button>
                 </div>
-
                 <div id="successMessage" class="mt-10 opacity-0 transition-opacity duration-1000">
                     <p class="romantic-font text-custom-red text-4xl">YEY! message me hihi <3</p>
                 </div>
@@ -130,154 +121,167 @@
         </div>
 
         <script>
-            let index = 0;
-            const lines = ["to my baby, my everything-", "atheena-"];
-            let cardsLeft = document.querySelectorAll(".swipeable").length;
+            // Use window.onload to ensure all assets (images/fonts) are ready
+            window.onload = () => {
+                let index = 0;
+                const lines = ["to my baby, my everything-", "atheena-"];
+                let cardsLeft = document.querySelectorAll(".swipeable").length;
 
-            const audio = new Audio('./audio/valentine.mp3');
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const source = audioCtx.createMediaElementSource(audio);
-            const gainNode = audioCtx.createGain();
-            gainNode.gain.value = 2;
-            source.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
+                const audio = new Audio('./audio/valentine.mp3');
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioCtx.createMediaElementSource(audio);
+                const gainNode = audioCtx.createGain();
+                gainNode.gain.value = 2;
+                source.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
 
-            function showLine() {
-                const text = document.getElementById("dialogueText");
-                const screen = document.getElementById("dialogueScreen");
+                // Handle the Start Click
+                document.getElementById('startBtn').addEventListener('click', () => {
+                    const entry = document.getElementById('entryOverlay');
+                    entry.classList.add('opacity-0');
+                    
+                    // Resume Audio Context and Play
+                    audioCtx.resume().then(() => {
+                        audio.play();
+                        setTimeout(() => {
+                            entry.remove();
+                            document.getElementById("dialogueScreen").classList.remove("hidden");
+                            showLine();
+                        }, 1000);
+                    });
+                });
 
-                if (index >= lines.length) {
-                    screen.classList.add("opacity-0");
+                function showLine() {
+                    const text = document.getElementById("dialogueText");
+                    const screen = document.getElementById("dialogueScreen");
+
+                    if (index >= lines.length) {
+                        screen.classList.add("opacity-0");
+                        setTimeout(() => {
+                            screen.classList.add("hidden");
+                            startPart2();
+                        }, 1000);
+                        return;
+                    }
+
+                    text.textContent = lines[index];
+                    text.classList.replace("opacity-0", "opacity-100");
+
                     setTimeout(() => {
-                        screen.classList.add("hidden");
-                        startPart2();
-                    }, 1000);
-                    return;
+                        text.classList.replace("opacity-100", "opacity-0");
+                        index++;
+                        setTimeout(showLine, 1000);
+                    }, 3000);
                 }
 
-                text.textContent = lines[index];
-                text.classList.remove("opacity-0");
-                text.classList.add("opacity-100");
+                function startPart2() {
+                    const stack = document.getElementById("polaroidStack");
+                    stack.classList.remove("opacity-0", "pointer-events-none");
+                    stack.classList.add("opacity-100");
+                    initSwipeLogic(); // Initialize swipes only when needed
+                }
 
-                setTimeout(() => {
-                    text.classList.remove("opacity-100");
-                    text.classList.add("opacity-0");
-                    index++;
-                    setTimeout(showLine, 1000);
-                }, 3000);
-            }
+                function initSwipeLogic() {
+                    let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
+                    
+                    document.querySelectorAll(".swipeable").forEach(card => {
+                        card.style.pointerEvents = "auto"; // Enable interaction
+                        card.addEventListener("pointerdown", e => {
+                            activeCard = e.currentTarget;
+                            activeCard.classList.remove("polaroid-transition");
+                            startX = e.clientX; startY = e.clientY;
+                            activeCard.setPointerCapture(e.pointerId);
+                        });
+                    });
 
-            function startPart2() {
-                const stack = document.getElementById("polaroidStack");
-                stack.classList.remove("opacity-0", "pointer-events-none");
-                stack.classList.add("opacity-100");
-            }
+                    window.addEventListener("pointermove", e => {
+                        if (!activeCard) return;
+                        currentX = e.clientX - startX;
+                        currentY = e.clientY - startY;
+                        activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentX * 0.1}deg)`;
+                        if (Math.random() > 0.9) spawnHeart(e.clientX, e.clientY);
+                    });
 
-            // RELOAD BUTTON TRIGGER
-            document.getElementById('reload-btn').addEventListener('click', () => {
-                document.getElementById('error-overlay').classList.add('hidden');
-                audioCtx.resume().then(() => {
-                    audio.play();
-                    showLine();
+                    window.addEventListener("pointerup", e => {
+                        if (!activeCard) return;
+                        activeCard.releasePointerCapture(e.pointerId);
+                        activeCard.classList.add("polaroid-transition");
+
+                        if (Math.abs(currentX) > 150) {
+                            const dir = currentX > 0 ? 1 : -1;
+                            activeCard.style.transform = `translate(${dir * 1200}px, ${currentY}px) rotate(${dir * 60}deg)`;
+                            activeCard.style.opacity = "0";
+                            const toRemove = activeCard;
+                            setTimeout(() => { 
+                                toRemove.remove(); 
+                                cardsLeft--;
+                                if (cardsLeft === 0) startPart3();
+                            }, 500);
+                        } else { activeCard.style.transform = ""; }
+                        activeCard = null; currentX = 0; currentY = 0;
+                    });
+                }
+
+                function startPart3() {
+                    document.getElementById("polaroidStack").classList.add("hidden");
+                    const section = document.getElementById("finalSection");
+                    section.classList.remove("pointer-events-none");
+                    section.classList.add("opacity-100");
+                }
+
+                // Move functions to global scope so HTML onclick can find them
+                window.moveNoButton = function() {
+                    const noBtn = document.getElementById("noButton");
+                    const yesBtn = document.getElementById("yesButton");
+                    const box = document.querySelector(".invitation-box");
+                    noBtn.style.position = "fixed";
+                    const padding = 20;
+                    const btnRect = noBtn.getBoundingClientRect();
+                    const boxRect = box.getBoundingClientRect();
+                    let x, y, safe = false;
+                    while (!safe) {
+                        x = Math.random() * (window.innerWidth - btnRect.width - padding * 2) + padding;
+                        y = Math.random() * (window.innerHeight - btnRect.height - padding * 2) + padding;
+                        const overlapX = x + btnRect.width > boxRect.left && x < boxRect.right;
+                        const overlapY = y + btnRect.height > boxRect.top && y < boxRect.bottom;
+                        if (!(overlapX && overlapY)) safe = true;
+                    }
+                    noBtn.style.left = `${x}px`;
+                    noBtn.style.top = `${y}px`;
+                    yesBtn.classList.remove("yes-pulse");
+                    void yesBtn.offsetWidth; 
+                    yesBtn.classList.add("yes-pulse");
+                }
+
+                window.handleYes = function() {
+                    document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
+                    document.getElementById("noButton").classList.add("hidden");
+                    for (let i = 0; i < 80; i++) {
+                        setTimeout(() => spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight), i * 40);
+                    }
+                }
+
+                window.spawnHeart = function(x, y) {
+                    const hearts = ["💖", "💕", "💘", "💝", "❤️", "💗"];
+                    const heart = document.createElement("div");
+                    heart.className = "heart-particle";
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                    heart.style.left = x + "px";
+                    heart.style.top = y + "px";
+                    heart.style.fontSize = (20 + Math.random() * 20) + "px";
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 800);
+                }
+
+                let lastHeartTime = 0;
+                window.addEventListener("mousemove", (e) => {
+                    const now = Date.now();
+                    if (now - lastHeartTime > 80) {
+                        spawnHeart(e.clientX, e.clientY);
+                        lastHeartTime = now;
+                    }
                 });
-            });
-
-            // Swipe Logic
-            let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
-            document.querySelectorAll(".swipeable").forEach(card => {
-                card.addEventListener("pointerdown", e => {
-                    activeCard = e.currentTarget;
-                    activeCard.classList.remove("polaroid-transition");
-                    startX = e.clientX; startY = e.clientY;
-                    activeCard.setPointerCapture(e.pointerId);
-                });
-            });
-
-            window.addEventListener("pointermove", e => {
-                if (!activeCard) return;
-                currentX = e.clientX - startX;
-                currentY = e.clientY - startY;
-                activeCard.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${currentX * 0.1}deg)`;
-                if (Math.random() > 0.9) spawnHeart(e.clientX, e.clientY);
-            });
-
-            window.addEventListener("pointerup", e => {
-                if (!activeCard) return;
-                activeCard.releasePointerCapture(e.pointerId);
-                activeCard.classList.add("polaroid-transition");
-
-                if (Math.abs(currentX) > 150) {
-                    const dir = currentX > 0 ? 1 : -1;
-                    activeCard.style.transform = `translate(${dir * 1200}px, ${currentY}px) rotate(${dir * 60}deg)`;
-                    activeCard.style.opacity = "0";
-                    const toRemove = activeCard;
-                    setTimeout(() => { 
-                        toRemove.remove(); 
-                        cardsLeft--;
-                        if (cardsLeft === 0) startPart3();
-                    }, 500);
-                } else { activeCard.style.transform = ""; }
-                activeCard = null; currentX = 0; currentY = 0;
-            });
-
-            function startPart3() {
-                document.getElementById("polaroidStack").classList.add("hidden");
-                const section = document.getElementById("finalSection");
-                section.classList.remove("pointer-events-none");
-                section.classList.add("opacity-100");
-            }
-
-            function moveNoButton() {
-                const noBtn = document.getElementById("noButton");
-                const yesBtn = document.getElementById("yesButton");
-                const box = document.querySelector(".invitation-box");
-                noBtn.style.position = "fixed";
-                const padding = 20;
-                const btnRect = noBtn.getBoundingClientRect();
-                const boxRect = box.getBoundingClientRect();
-                let x, y, safe = false;
-                while (!safe) {
-                    x = Math.random() * (window.innerWidth - btnRect.width - padding * 2) + padding;
-                    y = Math.random() * (window.innerHeight - btnRect.height - padding * 2) + padding;
-                    const overlapX = x + btnRect.width > boxRect.left && x < boxRect.right;
-                    const overlapY = y + btnRect.height > boxRect.top && y < boxRect.bottom;
-                    if (!(overlapX && overlapY)) safe = true;
-                }
-                noBtn.style.left = `${x}px`;
-                noBtn.style.top = `${y}px`;
-                yesBtn.classList.remove("yes-pulse");
-                void yesBtn.offsetWidth; 
-                yesBtn.classList.add("yes-pulse");
-            }
-
-            function handleYes() {
-                document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
-                document.getElementById("noButton").classList.add("hidden");
-                for (let i = 0; i < 80; i++) {
-                    setTimeout(() => spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight), i * 40);
-                }
-            }
-
-            function spawnHeart(x, y) {
-                const hearts = ["💖", "💕", "💘", "💝", "❤️", "💗"];
-                const heart = document.createElement("div");
-                heart.className = "heart-particle";
-                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-                heart.style.left = x + "px";
-                heart.style.top = y + "px";
-                heart.style.fontSize = (20 + Math.random() * 20) + "px";
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 800);
-            }
-
-            let lastHeartTime = 0;
-            window.addEventListener("mousemove", (e) => {
-                const now = Date.now();
-                if (now - lastHeartTime > 80) {
-                    spawnHeart(e.clientX, e.clientY);
-                    lastHeartTime = now;
-                }
-            });
+            };
         </script>
     </body>
 </html>
