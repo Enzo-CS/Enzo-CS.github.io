@@ -328,6 +328,39 @@
                     });
                 });
             });
+
+            window.addEventListener('DOMContentLoaded', () => {
+                
+            showLine();
+
+            audioCtx.resume().then(() => {
+                audio.play().catch(() => {
+                    const overlay = document.createElement('div');
+                    overlay.id = "audioOverlay";
+                    overlay.textContent = "Tap anywhere to start 🎵";
+                    overlay.style.cssText = `
+                        position: fixed;
+                        inset: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background: rgba(0,0,0,0.4);
+                        color: white;
+                        font-size: 2em;
+                        z-index: 9999;
+                        cursor: pointer;
+                    `;
+                    document.body.appendChild(overlay);
+
+                    overlay.addEventListener('click', () => {
+                        audio.play();
+                        audioCtx.resume();
+                        overlay.remove();
+                    }, { once: true });
+                });
+            });
+        });
+
         </script>
 
 
