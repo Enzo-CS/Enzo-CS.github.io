@@ -25,13 +25,17 @@
             .romantic-font { font-family: 'La Belle Aurore', cursive; }
             .polaroid-font { font-family: 'Patrick Hand', cursive; }
 
-            /* PART 2: Increased Polaroid Size (Original 250px -> 375px) */
+            .yes-pulse {
+                animation: heartbeat 0.6s ease-in-out;
+                box-shadow: 0 0 25px rgba(186, 35, 50, 0.6);
+            }
+
             .polaroid {
                 background: white;
                 padding: 18px 18px 36px;
                 box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
                 border-radius: 4px;
-                width: 375px; /* 50% increase from 250px */
+                width: 375px; 
                 cursor: grab;
                 user-select: none;
                 touch-action: none;
@@ -42,15 +46,16 @@
             }
             .polaroid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; pointer-events: none; }
 
-            /* PART 3: Increased Letter Box Size */
             .invitation-box {
+                position: relative;
+                overflow: visible;
                 background: white;
                 border-radius: 50px;
                 padding: 60px;
                 box-shadow: 0 30px 60px rgba(0,0,0,0.15);
                 max-width: 95%;
-                width: 650px; /* Increased width */
-                min-height: 400px; /* Increased height */
+                width: 650px;
+                min-height: 400px;
                 text-align: center;
                 display: flex;
                 flex-direction: column;
@@ -98,8 +103,9 @@
         <div id="finalSection" class="fixed inset-0 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-1000 z-50">
             <div class="invitation-box">
                 <h2 class="romantic-font text-custom-red text-6xl md:text-7xl mb-10 font-bold leading-tight text-center">
-                    <span class="block">will you be my</span>
-                    <span class="block font-extrabold text-[1.25em]">Valentine?</span>
+                    <span class="block font-extrabold text-[0.5em]"> </span>
+                    <span class="block font-extrabold text-[1.0em]">will you be my</span>
+                    <span class="block font-extrabold text-[1.6em]">Valentine?</span>
                 </h2>
 
                 <div class="flex flex-col sm:flex-row gap-10 w-full justify-center items-center mt-6 min-h-[120px]">
@@ -107,9 +113,15 @@
                         Yes!
                     </button>
 
-                    <button id="noButton" onmouseover="moveNoButton()" onclick="moveNoButton()" class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-all duration-200 z-[60]">
+                    <button
+                        id="noButton"
+                        onmouseenter="moveNoButton()"
+                        onclick="moveNoButton()"
+                        class="border-4 border-custom-red text-custom-red px-16 py-4 rounded-full text-4xl romantic-font transition-transform duration-200 z-[60]"
+                    >   
                         No
                     </button>
+
                 </div>
 
                 <div id="successMessage" class="mt-10 opacity-0 transition-opacity duration-1000">
@@ -126,7 +138,6 @@
             ];
             let cardsLeft = document.querySelectorAll(".swipeable").length;
 
-            /* --- DIALOGUE --- */
             function showLine() {
                 const text = document.getElementById("dialogueText");
                 const screen = document.getElementById("dialogueScreen");
@@ -160,7 +171,6 @@
 
             window.onload = () => setTimeout(showLine, 1000);
 
-            /* --- SWIPE LOGIC --- */
             let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
 
             document.querySelectorAll(".swipeable").forEach(card => {
@@ -199,9 +209,7 @@
                 activeCard = null; currentX = 0; currentY = 0;
             });
 
-            /* --- FINAL SECTION --- */
             function startPart3() {
-                // Ensure everything else is gone and clickable
                 document.getElementById("polaroidStack").classList.add("hidden");
                 const section = document.getElementById("finalSection");
                 section.classList.remove("pointer-events-none");
@@ -209,12 +217,38 @@
             }
 
             function moveNoButton() {
-                const btn = document.getElementById("noButton");
+                const noBtn = document.getElementById("noButton");
+                const yesBtn = document.getElementById("yesButton");
+                const box = document.querySelector(".invitation-box");
 
-                const x = (Math.random() - 0.5) * 400;
-                const y = (Math.random() - 0.5) * 200;
+                // Make NO button fixed so it ignores layout
+                noBtn.style.position = "fixed";
 
-                btn.style.transform = `translate(${x}px, ${y}px)`;
+                const padding = 20;
+                const btnRect = noBtn.getBoundingClientRect();
+                const boxRect = box.getBoundingClientRect();
+
+                let x, y;
+                let safe = false;
+
+                while (!safe) {
+                    x = Math.random() * (window.innerWidth - btnRect.width - padding * 2) + padding;
+                    y = Math.random() * (window.innerHeight - btnRect.height - padding * 2) + padding;
+
+                    // Prevent overlap with invitation box
+                    const overlapX = x + btnRect.width > boxRect.left && x < boxRect.right;
+                    const overlapY = y + btnRect.height > boxRect.top && y < boxRect.bottom;
+
+                    if (!(overlapX && overlapY)) safe = true;
+                }
+
+                noBtn.style.left = `${x}px`;
+                noBtn.style.top = `${y}px`;
+
+                // 💓 YES reacts
+                yesBtn.classList.remove("yes-pulse");
+                void yesBtn.offsetWidth; // restart animation
+                yesBtn.classList.add("yes-pulse");
             }
 
             function handleYes() {
