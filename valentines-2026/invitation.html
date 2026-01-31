@@ -128,7 +128,7 @@
                 </div>
 
                 <div id="successMessage" class="mt-10 opacity-0 transition-opacity duration-1000">
-                    <p class="romantic-font text-custom-red text-5xl">Yay! See you then! 💖</p>
+                    <p class="romantic-font text-custom-red text-4xl">YEY! check your email bab <3</p>
                 </div>
             </div>
         </div>
@@ -263,12 +263,29 @@
             }
 
             function spawnHeart(x, y) {
-                const heart = document.createElement("div");
-                heart.className = "heart-particle";
-                heart.textContent = "💖";
-                heart.style.left = x + "px"; heart.style.top = y + "px";
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 800);
+                const hearts = ["💖", "💕", "💘", "💝", "❤️", "💗"];
+
+                for (let i = 0; i < 2; i++) {
+                    const heart = document.createElement("div");
+                    heart.className = "heart-particle";
+
+                    heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+                    const offsetX = (Math.random() - 0.5) * 30;
+                    const offsetY = (Math.random() - 0.5) * 30;
+
+                    const size = 20 + Math.random() * 20;
+                    const rotation = (Math.random() - 0.5) * 60;
+
+                    heart.style.left = x + offsetX + "px";
+                    heart.style.top = y + offsetY + "px";
+                    heart.style.fontSize = size + "px";
+                    heart.style.transform = `rotate(${rotation}deg)`;
+
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 800);
+                }
             }
         </script>
     </body>
