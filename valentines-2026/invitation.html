@@ -130,7 +130,7 @@
                 </div>
 
                 <div id="successMessage" class="mt-10 opacity-0 transition-opacity duration-1000">
-                    <p class="romantic-font text-custom-red text-4xl">YEY! check your email bab <3</p>
+                    <p class="romantic-font text-custom-red text-4xl">YEY! message me hihi <3</p>
                 </div>
             </div>
         </div>
@@ -143,9 +143,22 @@
             ];
             let cardsLeft = document.querySelectorAll(".swipeable").length;
 
+            const audio = new Audio('./audio/valentine.mp3');
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioCtx.createMediaElementSource(audio);
+            const gainNode = audioCtx.createGain();
+            gainNode.gain.value = 2;
+            source.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
             function showLine() {
                 const text = document.getElementById("dialogueText");
                 const screen = document.getElementById("dialogueScreen");
+
+                if (index === 0) {
+                    audioCtx.resume();
+                    audio.play();
+                }
 
                 if (index >= lines.length) {
                     screen.classList.add("opacity-0");
@@ -226,7 +239,6 @@
                 const yesBtn = document.getElementById("yesButton");
                 const box = document.querySelector(".invitation-box");
 
-                // Make NO button fixed so it ignores layout
                 noBtn.style.position = "fixed";
 
                 const padding = 20;
@@ -240,7 +252,6 @@
                     x = Math.random() * (window.innerWidth - btnRect.width - padding * 2) + padding;
                     y = Math.random() * (window.innerHeight - btnRect.height - padding * 2) + padding;
 
-                    // Prevent overlap with invitation box
                     const overlapX = x + btnRect.width > boxRect.left && x < boxRect.right;
                     const overlapY = y + btnRect.height > boxRect.top && y < boxRect.bottom;
 
@@ -250,9 +261,8 @@
                 noBtn.style.left = `${x}px`;
                 noBtn.style.top = `${y}px`;
 
-                // 💓 YES reacts
                 yesBtn.classList.remove("yes-pulse");
-                void yesBtn.offsetWidth; // restart animation
+                void yesBtn.offsetWidth; 
                 yesBtn.classList.add("yes-pulse");
             }
 
@@ -261,7 +271,6 @@
                     .classList.replace("opacity-0", "opacity-100");
                 document.getElementById("noButton").classList.add("hidden");
 
-                // 💖 HEART CELEBRATION
                 for (let i = 0; i < 80; i++) {
                     setTimeout(
                         () => spawnHeart(
@@ -304,7 +313,6 @@
             window.addEventListener("mousemove", (e) => {
                 const now = Date.now();
 
-                // throttle: spawn every 80ms
                 if (now - lastHeartTime > 80) {
                     spawnHeart(e.clientX, e.clientY);
                     lastHeartTime = now;
