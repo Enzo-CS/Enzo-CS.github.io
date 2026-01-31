@@ -7,12 +7,6 @@
         <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
         
-        <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-        <script>
-            (function(){
-                emailjs.init("YOUR_PUBLIC_KEY");
-            })();
-        </script>
         <script src="https://cdn.tailwindcss.com"></script>
         
         <script>
@@ -263,10 +257,19 @@
             }
 
             function handleYes() {
-                document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
+                document.getElementById("successMessage")
+                    .classList.replace("opacity-0", "opacity-100");
                 document.getElementById("noButton").classList.add("hidden");
-                for(let i=0; i<50; i++) {
-                    setTimeout(() => spawnHeart(Math.random()*window.innerWidth, Math.random()*window.innerHeight), i*50);
+
+                // 💖 HEART CELEBRATION
+                for (let i = 0; i < 80; i++) {
+                    setTimeout(
+                        () => spawnHeart(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight
+                        ),
+                        i * 40
+                    );
                 }
             }
 
@@ -295,6 +298,18 @@
                     setTimeout(() => heart.remove(), 800);
                 }
             }
+
+            let lastHeartTime = 0;
+
+            window.addEventListener("mousemove", (e) => {
+                const now = Date.now();
+
+                // throttle: spawn every 80ms
+                if (now - lastHeartTime > 80) {
+                    spawnHeart(e.clientX, e.clientY);
+                    lastHeartTime = now;
+                }
+            });
         </script>
     </body>
 </html>
