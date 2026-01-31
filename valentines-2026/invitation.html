@@ -187,7 +187,13 @@
                 stack.classList.add("opacity-100");
             }
 
-            window.onload = () => setTimeout(showLine, 1000);
+            window.addEventListener('click', () => {
+                if (index === 0) {
+                    audioCtx.resume().then(() => {
+                        showLine();
+                    });
+                }
+            }, { once: true });
 
             let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
 
