@@ -143,7 +143,9 @@
             ];
             let cardsLeft = document.querySelectorAll(".swipeable").length;
 
+            // AUDIO SETUP
             const audio = new Audio('./audio/valentine.mp3');
+            audio.loop = true;
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const source = audioCtx.createMediaElementSource(audio);
             const gainNode = audioCtx.createGain();
@@ -151,6 +153,9 @@
             source.connect(gainNode);
             gainNode.connect(audioCtx.destination);
 
+            // -------------------
+            // DIALOGUE FUNCTION
+            // -------------------
             function showLine() {
                 const text = document.getElementById("dialogueText");
                 const screen = document.getElementById("dialogueScreen");
@@ -181,15 +186,14 @@
                 }, 3000);
             }
 
+            // -------------------
+            // POLAROID STACK
+            // -------------------
             function startPart2() {
                 const stack = document.getElementById("polaroidStack");
                 stack.classList.remove("opacity-0", "pointer-events-none");
                 stack.classList.add("opacity-100");
             }
-
-            window.addEventListener('load', () => {
-                showLine();
-            });
 
             let activeCard = null, startX = 0, startY = 0, currentX = 0, currentY = 0;
 
@@ -229,6 +233,9 @@
                 activeCard = null; currentX = 0; currentY = 0;
             });
 
+            // -------------------
+            // FINAL VALENTINE
+            // -------------------
             function startPart3() {
                 document.getElementById("polaroidStack").classList.add("hidden");
                 const section = document.getElementById("finalSection");
@@ -269,33 +276,23 @@
             }
 
             function handleYes() {
-                document.getElementById("successMessage")
-                    .classList.replace("opacity-0", "opacity-100");
+                document.getElementById("successMessage").classList.replace("opacity-0", "opacity-100");
                 document.getElementById("noButton").classList.add("hidden");
 
                 for (let i = 0; i < 80; i++) {
-                    setTimeout(
-                        () => spawnHeart(
-                            Math.random() * window.innerWidth,
-                            Math.random() * window.innerHeight
-                        ),
-                        i * 40
-                    );
+                    setTimeout(() => spawnHeart(Math.random() * window.innerWidth, Math.random() * window.innerHeight), i * 40);
                 }
             }
 
             function spawnHeart(x, y) {
                 const hearts = ["💖", "💕", "💘", "💝", "❤️", "💗"];
-
                 for (let i = 0; i < 2; i++) {
                     const heart = document.createElement("div");
                     heart.className = "heart-particle";
-
                     heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
 
                     const offsetX = (Math.random() - 0.5) * 30;
                     const offsetY = (Math.random() - 0.5) * 30;
-
                     const size = 20 + Math.random() * 20;
                     const rotation = (Math.random() - 0.5) * 60;
 
@@ -305,22 +302,34 @@
                     heart.style.transform = `rotate(${rotation}deg)`;
 
                     document.body.appendChild(heart);
-
                     setTimeout(() => heart.remove(), 800);
                 }
             }
 
             let lastHeartTime = 0;
-
             window.addEventListener("mousemove", (e) => {
                 const now = Date.now();
-
                 if (now - lastHeartTime > 80) {
                     spawnHeart(e.clientX, e.clientY);
                     lastHeartTime = now;
                 }
             });
-            
+
+            // -------------------
+            // AUTO-START EVERYTHING
+            // -------------------
+            window.addEventListener('DOMContentLoaded', () => {
+                showLine(); // start dialogue immediately
+
+                audioCtx.resume().then(() => {
+                    audio.play().catch(() => {
+                        // in case autoplay blocked, will start on first click
+                        document.body.addEventListener('click', () => audio.play(), { once: true });
+                    });
+                });
+            });
         </script>
+
+
     </body>
 </html>
