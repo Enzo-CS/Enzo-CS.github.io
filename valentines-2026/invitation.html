@@ -82,26 +82,6 @@
 
     <body class="bg-custom-pink overflow-hidden w-full h-screen">
 
-        <div id="error-overlay" class="fixed inset-0 z-[110] flex items-center justify-center bg-[#202124] font-sans text-white">
-            <div class="max-w-md p-8">
-                <div class="mb-6">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                        <path d="M9 9h.01"></path>
-                        <path d="M15 9h.01"></path>
-                        <path d="M8 16a5 5 0 0 1 8 0"></path>
-                    </svg>
-                </div>
-                <h1 class="mb-4 text-2xl font-normal">This site can’t be reached</h1>
-                <p class="mb-4 text-sm text-[#9aa0a6]">Check if there is a typo in <span class="font-semibold">asdnzbcj.com</span>.</p>
-                <p class="mb-6 text-sm text-[#9aa0a6]">If spelling is correct, <span class="text-[#8ab4f8] cursor-pointer">try running Windows Network Diagnostics</span>.</p>
-                <p class="mb-8 text-xs uppercase tracking-tight text-[#5f6368]">DNS_PROBE_FINISHED_NXDOMAIN</p>
-                <button id="reload-btn" class="rounded-md bg-[#8ab4f8] px-6 py-2 text-sm font-medium text-[#202124] hover:bg-[#aecbfa] transition-colors">
-                    Reload
-                </button>
-            </div>
-        </div>
-
         <div id="dialogueScreen" class="fixed inset-0 flex items-center justify-center z-[100] transition-opacity duration-1000 bg-custom-pink pointer-events-none">
             <p id="dialogueText" class="romantic-font text-custom-red text-6xl md:text-8xl font-bold opacity-0 transition-opacity duration-[1500ms] text-center px-4"></p>
         </div>
